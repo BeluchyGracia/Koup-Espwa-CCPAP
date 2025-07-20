@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter Résultat</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: none;
+        }
+        .card-header {
+            background-color: #2c3e50;
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+            padding: 1.2rem;
+        }
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 10px 15px;
+            border: 1px solid #ced4da;
+        }
+        .score-input {
+            max-width: 80px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+        .team-name {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .vs-separator {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h4 class="mb-0">Ajouter un Résultat de Match</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <form id="resultForm">
+                            <!-- Sélection du match -->
+                            <div class="mb-4">
+                                <label for="matchSelect" class="form-label">Match à compléter</label>
+                                <select class="form-select" id="matchSelect" required>
+                                    <option value="">Chargement des matchs...</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Section des scores (apparaît après sélection) -->
+                            <div id="scoreSection" class="mb-4" style="display: none;">
+                                <h5 class="text-center mb-3">Score Final</h5>
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <div class="text-center">
+                                        <div class="team-name" id="teamHomeName"></div>
+                                        <input type="number" class="form-control score-input" id="scoreHome" min="0" required>
+                                    </div>
+                                    <div class="vs-separator mx-3">-</div>
+                                    <div class="text-center">
+                                        <div class="team-name" id="teamAwayName"></div>
+                                        <input type="number" class="form-control score-input" id="scoreAway" min="0" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Bouton de soumission -->
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    Enregistrer le Résultat
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Charger les matchs sans résultat
+        async function loadMatches() {
+            try {
+                const response = await fetch('/api/matchs/sans-resultat');
+                
+                if (!response.ok) {
+                    throw new Error('Erreur de chargement des matchs');
+                }
+                
+                const matches = await response.json();
+                const select = document.getElementById('matchSelect');
+                
+                select.innerHTML = '<option value="">Sélectionnez un match</option>';
+                
+                matches.forEach(match => {
+                    const option = document.createElement('option');
+                    option.value = match.id;
+                    option.textContent = `${match.equipe_dom} vs ${match.equipe_ext} - ${new Date(match.date_match).toLocaleDateString()} (${match.stade})`;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erreur:', error);
+                document.getElementById('matchSelect').innerHTML = '<option value="">Erreur de chargement</option>';
+                alert('Impossible de charger les matchs. Veuillez réessayer.');
+            }
+        }
+        
+        // Lorsqu'un match est sélectionné
+        document.getElementById('matchSelect').addEventListener('change', function() {
+            const matchId = this.value;
+            const scoreSection = document.getElementById('scoreSection');
+            
+            if (!matchId) {
+                scoreSection.style.display = 'none';
+                return;
+            }
+            
+            // Extraire les noms d'équipes de l'option sélectionnée
+            const selectedText = this.options[this.selectedIndex].text;
+            const teams = selectedText.split(' vs ');
+            
+            document.getElementById('teamHomeName').textContent = teams[0];
+            document.getElementById('teamAwayName').textContent = teams[1].split(' - ')[0];
+            scoreSection.style.display = 'block';
+        });
+        
+        // Enregistrement du résultat
+        document.getElementById('resultForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const matchId = document.getElementById('matchSelect').value;
+            const scoreHome = document.getElementById('scoreHome').value;
+            const scoreAway = document.getElementById('scoreAway').value;
+            
+            try {
+                const response = await fetch('/api/resultats', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        match_id: matchId,
+                        score_dom: scoreHome,
+                        score_ext: scoreAway
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(result.error || 'Erreur inconnue');
+                }
+                
+                alert('Résultat enregistré avec succès !');
+                window.location.reload();
+                
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert(`Erreur lors de l'enregistrement: ${error.message}`);
+            }
+        });
+        
+        // Charger les matchs au démarrage
+        document.addEventListener('DOMContentLoaded', loadMatches);
+    </script>
+</body>
+</html>

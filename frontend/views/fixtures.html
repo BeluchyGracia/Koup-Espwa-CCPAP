@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koup Espwa CCPAP 2025 - Calendrier des matchs</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/fixtures.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+   <!-- ========================= EN-TÊTE (HEADER) ========================= -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <div class="d-flex w-100 justify-content-center d-lg-block">
+                    <a class="navbar-brand logo order-0 order-lg-0 mx-5 mx-sm-0" href="index_ken.html">
+                        <i class="fas fa-futbol"></i>Koup Espwa CCPAP 
+                    </a>
+                    <button class="navbar-toggler order-1 order-lg-0 hamburger-menu-bg mx-5 mx-sm-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"></button>
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse order-2 order-lg-0" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="index_ken.html">Accueil</a></li>
+                        <li class="nav-item"><a class="nav-link" href="calendrier.html">Calendrier</a></li>
+                         <li class="nav-item"><a class="nav-link" href="fixtures.html">Matchs</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index_jim.html">Stats</a></li>
+                        <!-- <li class="nav-item"><a class="nav-link" href="#">Connexion/Inscription</a></li> -->
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ========================= CONTENU PRINCIPAL ========================= -->
+    <main class="custom-main-content">
+        <div class="container">
+
+            <!-- AMÉLIORATION : Utilisation des classes flexbox responsives de Bootstrap -->
+            <!-- s'empile verticalement sur mobile (flex-column) et redevient horizontal sur desktop (flex-md-row) -->
+            <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-center gap-3 mb-4">
+                <h1 class="custom-fixtures-heading text-primary mb-0">Calendrier des Matchs</h1>
+                <div class="dropdown">
+                    <button class="btn custom-dropdown-toggle dropdown-toggle w-100" type="button" id="allTeamsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        Toutes les équipes
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="allTeamsDropdown">
+                        <li><a class="dropdown-item" href="#">Option 1</a></li>
+                        <li><a class="dropdown-item" href="#">Option 2</a></li>
+                        <li><a class="dropdown-item" href="#">Option 3</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- CORRECTION : Utilisation de la classe CSS personnalisée "custom-matchday-btn" comme défini dans fixtures.css -->
+            <!-- <div class="d-flex mb-4 custom-matchday-nav">
+                <button class="btn btn-primary active">Journée 1</button>
+                <button class="btn btn-primary">Journée 2</button>
+                <button class="btn btn-primary">Journée 3</button>
+                <button class="btn btn-primary">Journée 4</button>
+                <button class="btn btn-primary">Journée 5</button>
+                <button class="btn btn-primary">Journée 6</button>
+            </div> -->
+
+            <div id="fixtures-list" class="loading-content">
+                <!-- Le contenu des matchs sera injecté ici par JavaScript -->
+            </div>
+
+            <div class="text-center mt-5 mb-5">
+                <!-- AMÉLIORATION : Le texte reflète mieux l'action du bouton -->
+                <!-- <button id="loadMoreFixturesBtn" class="btn btn-primary">Journée Suivante</button> -->
+            </div>
+
+        </div> <!-- Fermeture du div.container -->
+    </main>
+
+     <!-- ========================= ABOUT SECTION ========================= -->
+    <section class="about-tournament">
+        <div class="container">
+            <h2 class="title-section-3">À Propos du Tournoi</h2>
+            <p>Le KOUP ESPWA CCPAP est un championnat de soccer communautaire rassemblant 16 équipes venues de différents quartiers et groupes de jeunes. Organisée chaque année avec passion et engagement, l’édition 2025 marque un nouveau chapitre de cette belle tradition sportive. Ce tournoi est organisé par l'Église CCPAP (Calvary Chapel Port-au-prince) dans le but de promouvoir l’unité, le respect, l’esprit d’équipe et les talents sportifs au sein de la jeunesse.</p>
+            <button class="btn btn-about" onclick="window.location.href='/views/signin.html'"> S'inscrire </button>
+        </div>
+    </section>
+    
+    <!-- ========================= PIED DE PAGE (FOOTER) ========================= -->
+    <footer class="footer">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <div class="footer-links mb-3 mb-md-0"><a href="#">Contact</a><a href="#">Règles</a><a href="#">Politique de Confidentialité</a></div>
+            <div class="social-icons mb-3 mb-md-0"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-instagram"></i></a></div>
+        </div>
+        <div class="footer-text mt-3"><p>© KOUP ESPWA 2025. Tous droits réservés.</p></div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/fixtures.js"></script>
+</body>
+</html>

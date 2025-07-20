@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f7fa;
+      color: #333;
+    }
+
+    header {
+      background-color: #2c3e50;
+      padding: 20px;
+      color: white;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background-color: white;
+      padding: 30px 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+
+    .card a {
+      text-decoration: none;
+      color: #2c3e50;
+      font-weight: 600;
+      font-size: 16px;
+      display: block;
+      margin-top: 10px;
+    }
+
+    .card-icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    ⚙️ Tableau de Bord Administrateur
+  </header>
+
+  <div class="container">
+    <div class="card-grid">
+
+      <div class="card">
+        <div class="card-icon">➕</div>
+        <a href="ajouter-match.html">Ajouter un Match</a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">📅</div>
+        <a href="ajouter-calendrier.html">Voir le Calendrier</a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">📝</div>
+        <a href="ajouter-resultat.html">Ajouter un Résultat</a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">⚽</div>
+        <a href="ajouter-buteur.html">Ajouter des Buteurs</a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🟥</div>
+        <a href="ajouter-carton.html">Ajouter des Cartons</a>
+      </div>
+
+       <div class="card">
+        <div class="card-icon"> 🏆</div>
+        <a href="ajouter_equipes.html">Ajouter une Équipe</a>
+      </div>
+
+       <div class="card">
+        <div class="card-icon"> 📝</div>
+        <a href="ajouter-joueurs.html">Ajouter des Joueurs</a>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🚪</div>
+        <a href="login.html" onclick="logout()">Déconnexion</a>
+      </div>
+
+
+    </div>
+  </div>
+
+  <script>
+    function logout() {
+      localStorage.clear();
+    }
+  </script>
+
+</body>
+</html>

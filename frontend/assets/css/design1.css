@@ -1,0 +1,303 @@
+ :root {
+            --primary: #28a745;
+            --primary-hover: #218838;
+            --danger: #dc3545;
+            --warning: #fd7e14;
+            --success: #28a745;
+            --gray: #6c757d;
+            --dark: #212529;
+            --light-gray: #e9ecef;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-size: small;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            color: var(--dark);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(40, 167, 69, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 80% 70%, rgba(33, 136, 56, 0.08) 0%, transparent 25%);
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            transform: translateY(0);
+            transition: all 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--primary);
+        }
+        
+        .icon-top {
+            position: absolute;
+            top: 1px;
+            left: 45%;
+            transform: translateX(-50%);
+            width: 48px;
+            height: 48px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+            font-weight: bold;
+            z-index: 2;
+            animation: bounce 4s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-8px); }
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: var(--dark);
+            background: linear-gradient(to right, var(--primary), #34ce57);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInDown 0.8s;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: var(--gray);
+            margin-bottom: 28px;
+            font-size: 15px;
+            line-height: 1.5;
+            animation: fadeIn 1s 0.2s both;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+            animation: fadeInUp 0.8s 0.3s both;
+        }
+        
+        .name-row {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .name-half {
+            flex: 1;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 14px;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: var(--light-gray);
+            border: 2px solid transparent;
+        }
+        
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+            background-color: white;
+            transform: translateY(-2px);
+        }
+        
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 14px;
+            color: var(--gray);
+        }
+        
+        .password-strength {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            animation: fadeIn 0.5s 0.4s both;
+        }
+        
+        .password-strength-label {
+            color: var(--gray);
+            font-weight: 500;
+        }
+        
+        .password-strength-value {
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .password-strength-bar {
+            height: 5px;
+            background-color: var(--light-gray);
+            border-radius: 5px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        
+        .password-strength-progress {
+            height: 100%;
+            width: 0%;
+            border-radius: 5px;
+            transition: all 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+        
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s 0.5s both;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.15);
+            transform: rotate(30deg);
+            transition: all 0.3s;
+        }
+        
+        .btn:hover::after {
+            left: 100%;
+        }
+        
+        .login-link {
+            margin-top: 25px;
+            color: var(--gray);
+            font-size: 14px;
+            animation: fadeIn 0.8s 0.6s both;
+        }
+        
+        .login-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+        }
+        
+        .login-link a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .login-link a:hover::after {
+            width: 100%;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #95a5a6;
+            animation: fadeIn 0.8s 0.7s both;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInDown {
+            from { 
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }

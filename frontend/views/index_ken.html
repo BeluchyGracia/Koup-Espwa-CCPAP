@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koup Espwa CCPAP 2025</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+   <link href="../assets/css/style_ken.css" rel="stylesheet">
+</head>
+<body>
+      
+    <!-- ========================= HEADER ========================= -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <div class="d-flex w-100 justify-content-between d-lg-block">
+                    <a class="navbar-brand logo order-0 order-lg-0" href="index_ken.html">
+                        <i class="fas fa-futbol"></i>Koup Espwa CCPAP 
+                    </a>
+                    <button class="navbar-toggler order-1 order-lg-0 hamburger-menu-bg" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse order-2 order-lg-0" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="index_ken.html">Accueil</a></li>
+                        <li class="nav-item"><a class="nav-link" href="calendrier.html">Calendrier</a></li>
+                        <li class="nav-item"><a class="nav-link" href="fixtures.html">Matchs</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index_jim.html">Stats</a></li>
+                        <li class="nav-item dropdown" id="userDropdown" style="display: none;">
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" id="userNameDisplay">Utilisateur</a>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#" id="logoutBtn">Se déconnecter</a></li>
+    </ul>
+</li>
+
+<li class="nav-item" id="loginLink">
+    <a class="nav-link" href="login.html">Connexion/Inscription</a>
+</li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ========================= HERO CAROUSEL ========================= -->
+    <section id="heroCarousel" class="carousel slide loading-content" data-bs-ride="carousel" data-bs-interval="7000">
+        <div class="carousel-inner">
+            <!-- Le contenu du carrousel sera généré par JavaScript -->
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Précédent</span></button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Suivant</span></button>
+    </section>
+    
+    <!-- ========================= MATCHES SECTION ========================= -->
+    <section class="matches-section container loading-content">
+        <h2 class="titleSection1 text-center text-md-start">Scores en Direct / Matchs Récents</h2>
+        
+        <!-- Carrousel pour Desktop -->
+        <div id="playedMatchesCarouselDesktop" class="carousel slide d-none d-md-block" data-bs-ride="carousel" data-bs-interval="5000">
+            <div class="carousel-inner">
+                <!-- Contenu généré par JavaScript -->
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#liveMatchesCarouselDesktop" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span></button>
+            <button class="carousel-control-next" type="button" data-bs-target="#liveMatchesCarouselDesktop" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span></button>
+        </div>
+
+        <!-- Carrousel pour Mobile -->
+        <div id="playedMatchesCarouselMobile" class="carousel slide d-block d-md-none" data-bs-ride="carousel" data-bs-interval="3000">
+            <div class="carousel-inner">
+                <!-- Contenu généré par JavaScript -->
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#liveMatchesCarouselMobile" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span></button>
+            <button class="carousel-control-next" type="button" data-bs-target="#liveMatchesCarouselMobile" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span></button>
+        </div>
+
+        <h2 class="titleSection2 mt-5 text-center text-md-start">Matchs à Venir</h2>
+        
+        <!-- Carrousel pour Desktop -->
+        <div id="upcomingMatchesCarouselDesktop" class="carousel slide d-none d-md-block" data-bs-ride="carousel" data-bs-interval="5500">
+             <div class="carousel-inner">
+                <!-- Contenu généré par JavaScript -->
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#upcomingMatchesCarouselDesktop" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span></button>
+            <button class="carousel-control-next" type="button" data-bs-target="#upcomingMatchesCarouselDesktop" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span></button>
+        </div>
+        
+        <!-- Carrousel pour Mobile -->
+        <div id="upcomingMatchesCarouselMobile" class="carousel slide d-block d-md-none" data-bs-ride="carousel" data-bs-interval="3500">
+            <div class="carousel-inner">
+                <!-- Contenu généré par JavaScript -->
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#upcomingMatchesCarouselMobile" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span></button>
+            <button class="carousel-control-next" type="button" data-bs-target="#upcomingMatchesCarouselMobile" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span></button>
+        </div>
+    </section>
+
+    <!-- ========================= PLAYER HIGHLIGHTS SECTION ========================= -->
+    <section class="player-highlights container loading-content">
+        <h2 class="titleSection2 text-center text-md-start"> Joueurs / Equipes à Regarder</h2>
+      <div class="stats-buttons">
+  <button class="btn btn-green text-white" onclick="window.location.href='index_jim.html?filter=cartons-rouges'">
+    <i class="fa-solid fa-square text-danger"></i> Cartons Rouges
+  </button>
+  <button class="btn btn-green text-white" onclick="window.location.href='index_jim.html?filter=cartons-jaunes'">
+    <i class="fa-solid fa-square text-warning"></i> Cartons Jaunes
+  </button>
+  <button class="btn btn-green text-white" onclick="window.location.href='index_jim.html?filter=meilleurs-buteurs'">
+    <i class="fa-solid fa-futbol text-white"></i> Meilleurs Buteurs
+  </button>
+</div>
+
+        <!-- Carrousel pour Desktop -->
+        <div id="playerHighlightsCarouselDesktop" class="carousel slide d-none d-md-block justify-content-center" data-bs-ride="carousel" data-bs-interval="6000">
+            <div class="carousel-inner">
+                 <!-- Contenu généré par JavaScript -->
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#playerHighlightsCarouselDesktop" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span></button>
+            <button class="carousel-control-next" type="button" data-bs-target="#playerHighlightsCarouselDesktop" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span></button>
+        </div>
+
+        <!-- Carrousel pour Mobile -->
+        <div id="playerHighlightsCarouselMobile" class="carousel slide d-block d-md-none" data-bs-ride="carousel" data-bs-interval="4000">
+            <div class="carousel-inner">
+                <!-- Contenu généré par JavaScript -->
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#playerHighlightsCarouselMobile" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span></button>
+            <button class="carousel-control-next" type="button" data-bs-target="#playerHighlightsCarouselMobile" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span></button>
+        </div>
+    </section>
+
+    <!-- ========================= ABOUT SECTION ========================= -->
+    <section class="about-tournament">
+        <div class="container">
+            <h2 class="title-section-3">À Propos du Tournoi</h2>
+            <p>Le KOUP ESPWA CCPAP est un championnat de soccer communautaire rassemblant 16 équipes venues de différents quartiers et groupes de jeunes. Organisée chaque année avec passion et engagement, l’édition 2025 marque un nouveau chapitre de cette belle tradition sportive. Ce tournoi est organisé par l'Église CCPAP (Calvary Chapel Port-au-prince) dans le but de promouvoir l’unité, le respect, l’esprit d’équipe et les talents sportifs au sein de la jeunesse. </p>
+            <button class="btn btn-about" onclick="window.location.href='/views/signin.html'">
+    S'inscrire
+</button>
+        </div>
+    </section>
+
+    <!-- ========================= FOOTER ========================= -->
+    <footer class="footer">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <div class="footer-links mb-3 mb-md-0"><a href="#">Contact</a><a href="#">Règles</a><a href="#">Politique de Confidentialité</a></div>
+            <div class="social-icons mb-3 mb-md-0"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-instagram"></i></a></div>
+        </div>
+        <div class="footer-text mt-3"><p>© KOUP ESPWA 2025. Tous droits réservés.</p></div>
+    </footer>
+
+    <!-- Scripts JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous" defer></script>
+    <script src="../assets/js/Scrypt_ken.js" defer></script>
+   <script>
+document.addEventListener("DOMContentLoaded", () => {
+    // === Gestion affichage utilisateur connecté ===
+    const nom = localStorage.getItem("nom_complet");
+    const role = localStorage.getItem("role");
+
+    const loginLink = document.getElementById("loginLink");
+    const userDropdown = document.getElementById("userDropdown");
+    const userNameDisplay = document.getElementById("userNameDisplay");
+
+    if (loginLink) loginLink.style.display = "block";
+    if (userDropdown) userDropdown.style.display = "none";
+
+    if (nom) {
+        if (loginLink) loginLink.style.display = "none";
+        if (userDropdown && userNameDisplay) {
+            userNameDisplay.innerText = nom;
+            userDropdown.style.display = "block";
+        }
+    }
+
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+            localStorage.removeItem("nom_complet");
+            localStorage.removeItem("role");
+            localStorage.removeItem("userId");
+            window.location.reload();
+        });
+    }
+
+    // === Données du carrousel principal ===
+   
+
+ 
+});
+</script>
+
+
+
+
+
+    
+</body>
+</html>

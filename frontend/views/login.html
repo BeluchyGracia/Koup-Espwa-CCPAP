@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Connexion - Ligue de Football</title>
+  <link rel="stylesheet" href="../assets/css/design2.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+
+  <div class="login-container animate__animated animate__fadeIn">
+    <div class="icon-top">⚽</div>
+    <h1>Content de te revoir</h1>
+    <p class="subtitle">Connectez-vous pour gérer votre équipe et suivre le championnat</p>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="username">Entrez votre nom d'utilisateur ou votre e-mail</label>
+        <input type="text" id="username" name="username" required />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Entrez votre mot de passe</label>
+        <input type="password" id="password" name="password" required />
+        <div class="password-strength">
+          <span class="password-strength-label">Solidité du mot de passe :</span>
+          <span class="password-strength-value" id="passwordStrengthValue">-</span>
+        </div>
+        <div class="password-strength-bar">
+          <div class="password-strength-progress" id="passwordStrengthProgress"></div>
+        </div>
+
+        <div class="forgot-password">
+          <a href="#" style="color: var(--primary); text-decoration: none; font-size: 13px;">Mot de passe oublié ?</a>
+        </div>
+      </div>
+
+      <button type="submit" class="login-btn">Se connecter</button>
+    </form>
+
+    <div class="register-link">
+      Vous n'avez pas de compte ? <a href="signin.html">S'inscrire</a>
+    </div>
+
+    <div class="footer">
+      Nous utiliserons vos informations uniquement pour gérer la participation des joueurs
+    </div>
+  </div>
+
+  <script>
+    // Barre de solidité du mot de passe
+    const passwordInput = document.getElementById('password');
+    const strengthValue = document.getElementById('passwordStrengthValue');
+    const strengthProgress = document.getElementById('passwordStrengthProgress');
+
+    passwordInput.addEventListener('input', () => {
+      const val = passwordInput.value;
+      let strength = 0;
+      if (val.length > 5) strength += 1;
+      if (val.match(/[A-Z]/)) strength += 1;
+      if (val.match(/[0-9]/)) strength += 1;
+      if (val.match(/[\W]/)) strength += 1;
+
+      const strengthTexts = ['Très faible', 'Faible', 'Moyen', 'Fort', 'Très fort'];
+      strengthValue.innerText = strengthTexts[strength];
+      strengthProgress.style.width = (strength * 25) + '%';
+      strengthProgress.style.backgroundColor = ['#ccc', 'red', 'orange', 'blue', 'green'][strength];
+    });
+
+    // Connexion
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+
+      try {
+        const res = await fetch('/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          // Stocker les infos utilisateur dans localStorage
+          localStorage.setItem('userId', data.userId);
+          localStorage.setItem('nom_complet', data.nom_complet);
+          localStorage.setItem('role', data.role);
+
+          // Redirection selon le rôle
+          if (data.role === 'admin') {
+            window.location.href = 'admin-dashboard.html';
+          } else {
+            window.location.href = 'index_ken.html';
+          }
+        } else {
+          alert(data.error || 'Identifiants incorrects.');
+        }
+      } catch (error) {
+        console.error('Erreur serveur :', error);
+        alert('Erreur lors de la connexion.');
+      }
+    });
+  </script>
+
+</body>
+</html>

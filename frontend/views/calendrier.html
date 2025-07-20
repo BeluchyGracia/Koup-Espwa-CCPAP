@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Calendrier Tournoi CCPAP</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --text-color: #333;
+            --highlight-color: #f1c40f;
+            --group-a: #e74c3c;
+            --group-b: #3498db;
+            --group-c: #2ecc71;
+            --group-d: #f39c12;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+        }
+
+        .tournament-header {
+            background: linear-gradient(135deg, #1e5799, #207cca);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .tournament-title {
+            font-size: 2.2rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .tournament-subtitle {
+            font-size: 1.1rem;
+            margin: 10px 0 0;
+            font-weight: 300;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            color: var(--dark-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        .groups-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .group {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .group-header {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 12px 20px;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .team-list {
+            padding: 15px;
+            margin: 0;
+            list-style: none;
+        }
+
+        .team-item {
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .team-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .bracket {
+            margin-bottom: 50px;
+        }
+
+        .bracket-container {
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+            padding: 20px 0;
+        }
+
+        .bracket-round {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            margin: 0 15px;
+            min-width: 200px;
+        }
+
+        .round-title {
+            text-align: center;
+            background-color: var(--dark-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .match-pair {
+            position: relative;
+            margin: 15px 0;
+        }
+
+        .match-team {
+            padding: 8px 12px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 2px 0;
+            width: 160px;
+            position: relative;
+        }
+
+        .match-team:after {
+            content: '';
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            width: 15px;
+            height: 1px;
+            background-color: #aaa;
+        }
+
+        .match-pair:before {
+            content: '';
+            position: absolute;
+            right: -15px;
+            top: 25%;
+            width: 15px;
+            height: 50%;
+            border-right: 1px solid #aaa;
+            border-top: 1px solid #aaa;
+            border-bottom: 1px solid #aaa;
+        }
+
+        .final .match-team:after,
+        .final .match-pair:before {
+            display: none;
+        }
+
+        .winner {
+            background-color: var(--highlight-color);
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .bracket-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .bracket-round {
+                margin: 15px 0;
+            }
+
+            .match-pair {
+                margin: 8px 0;
+            }
+
+            .match-team:after, .match-pair:before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="tournament-header">
+        <h1 class="tournament-title">Tournoi CCPAP</h1>
+        <p class="tournament-subtitle">Calendrier - Groupes & Arbre</p>
+    </header>
+
+    <div class="container">
+        <!-- GROUPES -->
+        <h2 class="section-title">Groupes</h2>
+        <div class="groups-container" id="groupsContainer">
+            <div class="group">
+                <div class="group-header">Groupe A</div>
+                <ul class="team-list">
+                    <li class="team-item">Équipe 1</li>
+                    <li class="team-item">Équipe 2</li>
+                    <li class="team-item">Équipe 3</li>
+                    <li class="team-item">Équipe 4</li>
+                </ul>
+            </div>
+            <div class="group">
+                <div class="group-header">Groupe B</div>
+                <ul class="team-list">
+                    <li class="team-item">Équipe 5</li>
+                    <li class="team-item">Équipe 6</li>
+                    <li class="team-item">Équipe 7</li>
+                    <li class="team-item">Équipe 8</li>
+                </ul>
+            </div>
+            <!-- Ajoute ici d’autres groupes si nécessaire -->
+              <div class="group">
+                <div class="group-header">Groupe C</div>
+                <ul class="team-list">
+                    <li class="team-item">Équipe 1</li>
+                    <li class="team-item">Équipe 2</li>
+                    <li class="team-item">Équipe 3</li>
+                    <li class="team-item">Équipe 4</li>
+                </ul>
+            </div>
+            <div class="group">
+                <div class="group-header">Groupe D</div>
+                <ul class="team-list">
+                    <li class="team-item">Équipe 5</li>
+                    <li class="team-item">Équipe 6</li>
+                    <li class="team-item">Équipe 7</li>
+                    <li class="team-item">Équipe 8</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ARBRE DU TOURNOI -->
+        <h2 class="section-title">Arbre du Tournoi</h2>
+       <div class="bracket" id="bracketContainer">
+    <div class="bracket-container">
+        <!-- Quarts de finale -->
+        <div class="bracket-round">
+            <div class="round-title">Quarts de finale</div>
+            <div class="match-pair">
+                <div class="match-team">Équipe A1</div>
+                <div class="match-team">Équipe B2</div>
+            </div>
+            <div class="match-pair">
+                <div class="match-team">Équipe B1</div>
+                <div class="match-team">Équipe A2</div>
+            </div>
+            <div class="match-pair">
+                <div class="match-team">Équipe C1</div>
+                <div class="match-team">Équipe D2</div>
+            </div>
+            <div class="match-pair">
+                <div class="match-team">Équipe D1</div>
+                <div class="match-team">Équipe C2</div>
+            </div>
+        </div>
+
+        <!-- Demi-finales -->
+        <div class="bracket-round">
+            <div class="round-title">Demi-finales</div>
+            <div class="match-pair">
+                <div class="match-team">Gagnant Quart 1</div>
+                <div class="match-team">Gagnant Quart 2</div>
+            </div>
+            <div class="match-pair">
+                <div class="match-team">Gagnant Quart 3</div>
+                <div class="match-team">Gagnant Quart 4</div>
+            </div>
+        </div>
+
+        <!-- Finale -->
+        <div class="bracket-round final">
+            <div class="round-title">Finale</div>
+            <div class="match-pair">
+                <div class="match-team">Gagnant Demi 1</div>
+                <div class="match-team">Gagnant Demi 2</div>
+            </div>
+            <div class="match-team winner">Vainqueur</div>
+        </div>
+    </div>
+</div>
+    </div>
+<script>
+    // Connexion WebSocket améliorée
+    let tournamentSocket;
+    let reconnectAttempts = 0;
+    const maxReconnectAttempts = 5;
+    const reconnectDelay = 3000;
+
+    function connectWebSocket() {
+        tournamentSocket = new WebSocket(`ws://${window.location.host}/ws-tournament`);
+
+        tournamentSocket.onopen = () => {
+            reconnectAttempts = 0;
+            const errorElement = document.querySelector('.connection-error');
+            if (errorElement) errorElement.remove();
+            console.log('Connexion WebSocket établie');
+        };
+
+        tournamentSocket.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                updateTournamentView(data);
+            } catch (error) {
+                console.error('Erreur traitement message:', error);
+            }
+        };
+
+        tournamentSocket.onerror = (error) => {
+            console.error('Erreur WebSocket:', error);
+        };
+
+        tournamentSocket.onclose = () => {
+            console.log('Connexion WebSocket fermée');
+            if (reconnectAttempts < maxReconnectAttempts) {
+                reconnectAttempts++;
+                setTimeout(connectWebSocket, reconnectDelay);
+            } else {
+                showConnectionError();
+                setupPolling();
+            }
+        };
+    }
+
+    function showConnectionError() {
+        const existingError = document.querySelector('.connection-error');
+        if (existingError) return;
+
+        const errorElement = document.createElement('div');
+        errorElement.className = 'connection-error';
+        errorElement.innerHTML = `
+            <p>Connexion en temps réel interrompue - mise à jour toutes les 10 secondes</p>
+            <button onclick="reconnectNow()">Reconnecter maintenant</button>
+        `;
+        document.body.prepend(errorElement);
+    }
+
+    function reconnectNow() {
+        const errorElement = document.querySelector('.connection-error');
+        if (errorElement) errorElement.remove();
+        reconnectAttempts = 0;
+        connectWebSocket();
+    }
+
+    // Fonction améliorée pour trouver les éléments
+    function findTournamentElement(type, identifier) {
+        const elements = document.querySelectorAll(`.${type}`);
+        for (const el of elements) {
+            if (el.textContent.trim() === identifier) {
+                return el;
+            }
+        }
+        return null;
+    }
+
+    // Mise à jour des groupes optimisée
+    function updateGroup(groupName, teams) {
+        const groupHeader = findTournamentElement('group-header', `Groupe ${groupName}`);
+        if (!groupHeader) return;
+
+        const teamList = groupHeader.nextElementSibling;
+        if (!teamList || !teamList.classList.contains('team-list')) return;
+
+        // Optimisation: ne mettre à jour que si nécessaire
+        const currentTeams = Array.from(teamList.children).map(li => li.textContent.trim());
+        const newTeams = teams.map(team => team.nom || `Équipe ${team.id}`);
+
+        if (JSON.stringify(currentTeams) !== JSON.stringify(newTeams)) {
+            teamList.innerHTML = '';
+            newTeams.forEach(teamName => {
+                const li = document.createElement('li');
+                li.className = 'team-item';
+                li.textContent = teamName;
+                teamList.appendChild(li);
+            });
+        }
+    }
+
+    // Mise à jour des matchs optimisée
+    function updateMatch(container, matchId, team1, team2) {
+        const matchElement = document.getElementById(matchId);
+        if (!matchElement) return;
+
+        const [team1Element, team2Element] = matchElement.querySelectorAll('.match-team');
+        
+        if (team1Element && team1Element.textContent.trim() !== team1) {
+            team1Element.textContent = team1 || '';
+        }
+        
+        if (team2Element && team2Element.textContent.trim() !== team2) {
+            team2Element.textContent = team2 || '';
+        }
+    }
+
+   function updateTournamentView(data) {
+    if (!data) return;
+
+    // Groupes - version optimisée avec vérification des données
+    if (data.groupes) {
+        Object.entries(data.groupes).forEach(([groupName, teams]) => {
+            // Vérification supplémentaire pour s'assurer que teams est un tableau
+            if (Array.isArray(teams)) {
+                updateGroup(groupName, teams);
+            } else {
+                console.error(`Format invalide pour le groupe ${groupName}`, teams);
+            }
+        });
+    }
+
+    // Quarts de finale - avec gestion des erreurs
+    if (data.quarts && Array.isArray(data.quarts)) {
+        data.quarts.forEach((quart, index) => {
+            try {
+                updateMatch(
+                    'bracketContainer',
+                    `quart-${index}`,
+                    quart.nom1 || '',
+                    quart.nom2 || ''
+                );
+            } catch (error) {
+                console.error(`Erreur mise à jour quart ${index}:`, error);
+            }
+        });
+    }
+
+    // Demi-finales - avec gestion des erreurs
+    if (data.demis && Array.isArray(data.demis)) {
+        data.demis.forEach((demi, index) => {
+            try {
+                updateMatch(
+                    'bracketContainer',
+                    `demi-${index}`,
+                    demi.nom1 || '',
+                    demi.nom2 || ''
+                );
+            } catch (error) {
+                console.error(`Erreur mise à jour demi ${index}:`, error);
+            }
+        });
+    }
+
+    // Finale - version robuste avec vérification complète
+    if (data.finale) {
+        try {
+            updateMatch(
+                'bracketContainer',
+                'finale',
+                data.finale.nom1 || '',
+                data.finale.nom2 || ''
+            );
+
+            const winnerElement = document.querySelector('.winner');
+            if (winnerElement) {
+                // Ajout d'une classe pour le vainqueur si nom existe
+                if (data.vainqueur?.nom) {
+                    winnerElement.textContent = data.vainqueur.nom;
+                    winnerElement.classList.add('winner-highlight');
+                } else {
+                    winnerElement.textContent = 'Vainqueur';
+                    winnerElement.classList.remove('winner-highlight');
+                }
+            }
+        } catch (error) {
+            console.error('Erreur mise à jour finale:', error);
+        }
+    }
+
+    // Ajout d'un indicateur visuel de mise à jour
+    const updateIndicator = document.getElementById('update-indicator') || document.createElement('div');
+    updateIndicator.id = 'update-indicator';
+    updateIndicator.textContent = `Dernière mise à jour: ${new Date().toLocaleTimeString()}`;
+    updateIndicator.className = 'update-indicator';
+    
+    if (!document.getElementById('update-indicator')) {
+        document.body.appendChild(updateIndicator);
+        // Disparaît après 3 secondes
+        setTimeout(() => {
+            updateIndicator.classList.add('fade-out');
+            setTimeout(() => updateIndicator.remove(), 1000);
+        }, 3000);
+    }
+}
+
+    // Polling de secours amélioré
+    let pollingInterval;
+    function setupPolling() {
+        if (pollingInterval) clearInterval(pollingInterval);
+        
+        // Premier chargement immédiat
+        loadInitialData();
+        
+        // Puis toutes les 10 secondes
+        pollingInterval = setInterval(loadInitialData, 10000);
+    }
+
+    // Chargement initial avec cache
+    async function loadInitialData() {
+        try {
+            const response = await fetch('/api/get-tournament?t=' + Date.now());
+            
+            if (!response.ok) throw new Error(`Erreur ${response.status}`);
+            
+            const result = await response.json();
+            
+            if (!result.success) {
+                throw new Error(result.message || 'Réponse invalide du serveur');
+            }
+            
+            updateTournamentView(result.data);
+        } catch (error) {
+            console.error('Erreur chargement:', error);
+            showDataError(error);
+        }
+    }
+
+    function showDataError(error) {
+        const existingError = document.getElementById('data-error');
+        if (existingError) {
+            existingError.querySelector('small').textContent = error.message;
+            return;
+        }
+
+        const errorElement = document.createElement('div');
+        errorElement.id = 'data-error';
+        errorElement.className = 'data-error';
+        errorElement.innerHTML = `
+            <p>Problème de chargement des données</p>
+            <small>${error.message}</small>
+            <button onclick="loadInitialData()">Réessayer</button>
+        `;
+        document.body.prepend(errorElement);
+    }
+
+    // Initialisation
+    document.addEventListener('DOMContentLoaded', () => {
+        // Démarrer la connexion WebSocket
+        connectWebSocket();
+        
+        // Charger les données initiales
+        loadInitialData();
+        
+        // Styles
+        addErrorStyles();
+    });
+
+    const updateStyles = document.createElement('style');
+updateStyles.textContent = `
+    .update-indicator {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 14px;
+        z-index: 1000;
+        transition: opacity 1s;
+    }
+    .fade-out {
+        opacity: 0;
+    }
+    .winner-highlight {
+        background-color: #f1c40f;
+        font-weight: bold;
+        animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+        0% { background-color: #f1c40f; }
+        50% { background-color: #f39c12; }
+        100% { background-color: #f1c40f; }
+    }
+`;
+document.head.appendChild(updateStyles);
+
+    function addErrorStyles() {
+        const style = document.createElement('style');
+        style.textContent = `
+            .connection-error, .data-error {
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #e74c3c;
+                color: white;
+                padding: 12px 24px;
+                border-radius: 5px;
+                z-index: 1000;
+                text-align: center;
+                max-width: 90%;
+                box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                align-items: center;
+            }
+            .connection-error button, .data-error button {
+                background: white;
+                color: #e74c3c;
+                border: none;
+                padding: 6px 12px;
+                border-radius: 3px;
+                cursor: pointer;
+                font-weight: bold;
+            }
+            @media (max-width: 600px) {
+                .connection-error, .data-error {
+                    width: 90%;
+                    top: 10px;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+</script>
+</body>
+</html>

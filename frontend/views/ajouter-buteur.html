@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enregistrement des Buteurs</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #34495e;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: var(--dark);
+        }
+        
+        .card {
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            border: none;
+        }
+        
+        .card-header {
+            background-color: var(--secondary);
+            color: white;
+            border-radius: 12px 12px 0 0 !important;
+            padding: 1.25rem 1.5rem;
+        }
+        
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border: none;
+            padding: 12px;
+            font-weight: 500;
+            border-radius: 8px;
+        }
+        
+        .btn-success {
+            background-color: var(--success);
+            border: none;
+            padding: 12px;
+            font-weight: 500;
+            border-radius: 8px;
+        }
+        
+        .match-info {
+            background-color: var(--light);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .goal-badge {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--success);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .goal-badge .btn-sm {
+            margin-left: 8px;
+        }
+        
+        .time-input {
+            max-width: 80px;
+            text-align: center;
+        }
+        
+        .player-select {
+            min-width: 200px;
+        }
+
+        /* Animation du spinner */
+        @keyframes spinner-border {
+            to { transform: rotate(360deg); }
+        }
+        .spinner-border {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            vertical-align: text-bottom;
+            border: 0.15em solid currentColor;
+            border-right-color: transparent;
+            border-radius: 50%;
+            animation: spinner-border .75s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h3 class="mb-0">Enregistrement des Buteurs</h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <form id="goalForm">
+                            <!-- Sélection du match -->
+                            <div class="mb-4">
+                                <label for="matchSelect" class="form-label">Match *</label>
+                                <select class="form-select" id="matchSelect" required>
+                                    <option value="">Chargement des matchs...</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Détails du match sélectionné -->
+                            <div id="matchDetails" class="match-info d-none">
+                                <div class="row align-items-center">
+                                    <div class="col-md-5 text-end">
+                                        <h5 id="teamHome"></h5>
+                                    </div>
+                                    <div class="col-md-2 text-center">
+                                        <h5>vs</h5>
+                                    </div>
+                                    <div class="col-md-5 text-start">
+                                        <h5 id="teamAway"></h5>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col text-center">
+                                        <span id="matchDate" class="text-muted"></span> | 
+                                        <span id="matchStade" class="text-muted"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Ajout d'un but -->
+                            <div class="mb-4">
+                                <h5 class="mb-3">Ajouter un but</h5>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="goalTeam" class="form-label">Équipe *</label>
+                                        <select class="form-select" id="goalTeam" required disabled>
+                                            <option value="">Sélectionnez d'abord un match</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="goalPlayer" class="form-label">Joueur *</label>
+                                        <select class="form-select" id="goalPlayer" required disabled>
+                                            <option value="">Sélectionnez d'abord une équipe</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="goalMinute" class="form-label">Minute *</label>
+                                        <input type="number" class="form-control time-input" id="goalMinute" 
+                                               min="1" max="120" required placeholder="Min">
+                                    </div>
+                                    <div class="col-md-8 d-flex align-items-end">
+                                        <button type="button" id="addGoalBtn" class="btn btn-success w-100" disabled>
+                                            Ajouter le but
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Liste des buts enregistrés -->
+                            <div class="mb-4">
+                                <h5 class="mb-3">Buts enregistrés</h5>
+                                <div id="goalsList" class="d-flex flex-wrap">
+                                    <div class="text-muted">Aucun but enregistré</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Validation finale -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary" id="submitBtn" disabled>
+                                    <span id="submitBtnText">Enregistrer tous les buts</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let currentMatch = null;
+        let goals = [];
+        let playersCache = {};
+        
+        // Chargement initial des matchs
+        async function loadMatches() {
+            try {
+                const response = await fetch('/api/matchs/avec-resultats');
+                if (!response.ok) throw new Error('Erreur de chargement');
+                
+                const matches = await response.json();
+                const select = document.getElementById('matchSelect');
+                
+                select.innerHTML = '<option value="">Sélectionnez un match</option>';
+                
+                matches.forEach(match => {
+                    const option = document.createElement('option');
+                    option.value = match.id;
+                    option.textContent = `${match.equipe_dom} vs ${match.equipe_ext} (${new Date(match.date_match).toLocaleDateString()})`;
+                    option.dataset.match = JSON.stringify(match);
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erreur:', error);
+                document.getElementById('matchSelect').innerHTML = '<option value="">Erreur de chargement</option>';
+            }
+        }
+        
+        // Chargement des joueurs d'une équipe
+        async function loadPlayers(teamId) {
+            if (playersCache[teamId]) {
+                return playersCache[teamId];
+            }
+            
+            try {
+                const response = await fetch(`/api/equipes/${teamId}/joueurs`);
+                if (!response.ok) throw new Error('Erreur de chargement');
+                
+                const players = await response.json();
+                playersCache[teamId] = players;
+                return players;
+            } catch (error) {
+                console.error('Erreur:', error);
+                return [];
+            }
+        }
+        
+        // Au changement de sélection du match
+        document.getElementById('matchSelect').addEventListener('change', async function() {
+            const matchId = this.value;
+            const matchDetails = document.getElementById('matchDetails');
+            const goalTeamSelect = document.getElementById('goalTeam');
+            
+            if (!matchId) {
+                matchDetails.classList.add('d-none');
+                goalTeamSelect.disabled = true;
+                goalTeamSelect.innerHTML = '<option value="">Sélectionnez d\'abord un match</option>';
+                document.getElementById('goalPlayer').disabled = true;
+                document.getElementById('addGoalBtn').disabled = true;
+                return;
+            }
+            
+            // Récupérer les données du match
+            const selectedOption = this.options[this.selectedIndex];
+            currentMatch = JSON.parse(selectedOption.dataset.match);
+            
+            // Afficher les détails du match
+            document.getElementById('teamHome').textContent = currentMatch.equipe_dom;
+            document.getElementById('teamAway').textContent = currentMatch.equipe_ext;
+            
+            const matchDate = new Date(currentMatch.date_match);
+            document.getElementById('matchDate').textContent = matchDate.toLocaleDateString() + ' ' + matchDate.toLocaleTimeString();
+            document.getElementById('matchStade').textContent = currentMatch.stade;
+            
+            matchDetails.classList.remove('d-none');
+            
+            // Remplir le select des équipes
+            goalTeamSelect.innerHTML = `
+                <option value="">Sélectionnez une équipe</option>
+                <option value="${currentMatch.equipe_dom_id}">${currentMatch.equipe_dom}</option>
+                <option value="${currentMatch.equipe_ext_id}">${currentMatch.equipe_ext}</option>
+            `;
+            goalTeamSelect.disabled = false;
+            
+            // Réinitialiser
+            document.getElementById('goalPlayer').innerHTML = '<option value="">Sélectionnez d\'abord une équipe</option>';
+            document.getElementById('goalPlayer').disabled = true;
+            document.getElementById('addGoalBtn').disabled = true;
+            goals = [];
+            updateGoalsList();
+        });
+        
+        // Au changement de sélection de l'équipe
+        document.getElementById('goalTeam').addEventListener('change', async function() {
+            const teamId = this.value;
+            const playerSelect = document.getElementById('goalPlayer');
+            
+            if (!teamId) {
+                playerSelect.innerHTML = '<option value="">Sélectionnez d\'abord une équipe</option>';
+                playerSelect.disabled = true;
+                document.getElementById('addGoalBtn').disabled = true;
+                return;
+            }
+            
+            // Charger les joueurs de l'équipe
+            const players = await loadPlayers(teamId);
+            
+            playerSelect.innerHTML = '<option value="">Sélectionnez un joueur</option>';
+            
+            players.forEach(player => {
+                const option = document.createElement('option');
+                option.value = player.id;
+                option.textContent = `${player.nom} (${player.numero_maillot}) - ${player.post}`;
+                playerSelect.appendChild(option);
+            });
+            
+            playerSelect.disabled = false;
+            document.getElementById('addGoalBtn').disabled = false;
+        });
+        
+        // Ajout d'un but
+        document.getElementById('addGoalBtn').addEventListener('click', function() {
+            const teamId = document.getElementById('goalTeam').value;
+            const playerId = document.getElementById('goalPlayer').value;
+            const minute = document.getElementById('goalMinute').value;
+            
+            // Validation simple
+            if (!teamId || !playerId || !minute) {
+                alert('Veuillez remplir tous les champs');
+                return;
+            }
+            
+            // Trouver les informations du joueur
+            const teamSelect = document.getElementById('goalTeam');
+            const playerSelect = document.getElementById('goalPlayer');
+            const teamName = teamSelect.options[teamSelect.selectedIndex].text;
+            const playerName = playerSelect.options[playerSelect.selectedIndex].text.split(' (')[0];
+            
+            // Ajouter le but à la liste
+            goals.push({
+                match_id: currentMatch.id,
+                joueur_id: playerId,
+                minute: minute,
+                team_id: teamId,
+                team_name: teamName,
+                player_name: playerName
+            });
+            
+            // Réinitialiser le formulaire
+            document.getElementById('goalMinute').value = '';
+            document.getElementById('goalPlayer').value = '';
+            
+            // Mettre à jour l'affichage
+            updateGoalsList();
+        });
+        
+        // Mise à jour de la liste des buts
+        function updateGoalsList() {
+            const goalsList = document.getElementById('goalsList');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            if (goals.length === 0) {
+                goalsList.innerHTML = '<div class="text-muted">Aucun but enregistré</div>';
+                submitBtn.disabled = true;
+                return;
+            }
+            
+            goalsList.innerHTML = '';
+            
+            goals.forEach((goal, index) => {
+                const badge = document.createElement('div');
+                badge.className = 'goal-badge';
+                badge.innerHTML = `
+                    ${goal.player_name} (${goal.minute}')
+                    <button type="button" class="btn btn-sm btn-danger" data-index="${index}">
+                        &times;
+                    </button>
+                `;
+                goalsList.appendChild(badge);
+            });
+            
+            // Activer le bouton de soumission
+            submitBtn.disabled = false;
+            
+            // Gestion des boutons de suppression
+            document.querySelectorAll('#goalsList .btn-danger').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    goals.splice(index, 1);
+                    updateGoalsList();
+                });
+            });
+        }
+        
+        // Enregistrement des buts
+        document.getElementById('goalForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (goals.length === 0) {
+                alert('Aucun but à enregistrer');
+                return;
+            }
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const originalBtnText = submitBtn.innerHTML;
+            
+            // Désactiver le bouton pendant l'envoi
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Enregistrement...
+            `;
+            
+            try {
+                const response = await fetch('/api/buts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(goals.map(g => ({
+                        joueur_id: g.joueur_id,
+                        match_id: g.match_id,
+                        minute: g.minute
+                    })))
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || 'Erreur serveur');
+                }
+                
+                const result = await response.json();
+                
+                // Affiche un message de succès
+                alert(`${result.message} (${goals.length} buts)`);
+                
+                // Réinitialisation contrôlée
+                goals = [];
+                updateGoalsList();
+                
+                // Réactive les champs
+                document.getElementById('goalTeam').disabled = false;
+                document.getElementById('goalPlayer').disabled = false;
+                document.getElementById('addGoalBtn').disabled = false;
+                
+            } catch (error) {
+                console.error("Erreur:", error);
+                alert(`Erreur: ${error.message}`);
+            } finally {
+                // Réinitialise le bouton
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+            }
+        });
+        
+        // Chargement initial
+        document.addEventListener('DOMContentLoaded', loadMatches);
+    </script>
+</body>
+</html>

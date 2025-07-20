@@ -1,0 +1,21 @@
+{
+  "groupes": {
+    "Groupe A": ["Équipe A1", "Équipe A2", "Équipe A3", "Équipe A4"],
+    "Groupe B": ["Équipe B1", "Équipe B2", "Équipe B3", "Équipe B4"]
+  },
+  "matchsGroupes": {
+    "Groupe A": [
+      {
+        "date": "2023-10-01",
+        "equipe1": "Équipe A1",
+        "equipe2": "Équipe A2"
+      }
+    ]
+  },
+  "journees": [
+    {
+      "numero": 1,
+      "date": "2023-10-01"
+    }
+  ]
+}

@@ -1,0 +1,405 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* ========================= VARIABLES & RESET ========================= */
+:root {
+    --primary-color: #007bff; /* Blue for buttons, etc. */
+    --secondary-color: #006400; /* Green for about section, etc. */
+    --secondary-hover-color: #00640088; /* Green for about section, etc. */
+    --dark-grey: #343a40;
+    --light-grey: #f8f9fa;
+    --white: #ffffff;
+    --red: #dc3545;
+    --yellow: #ffc107;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: var(--dark-grey);
+    background-color: var(--light-grey);
+}
+
+/* .container {
+    max-width: 1750px;
+} */
+
+/* ========================= SOLUTION FOUC ========================= */
+/* Cache les sections en attente de contenu JS pour éviter le "saut" visuel. */
+.loading-content {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out, visibility 0.4s;
+}
+
+/* ========================= NAVBAR ========================= */
+.navbar {
+    background-color: var(--white);
+    padding: 10px 0;
+}
+
+.navbar .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+}
+
+.navbar .logo i {
+    margin-right: 10px;
+    color: var(--secondary-color);
+}
+
+.hamburger-menu-bg {
+    background-color: var(--secondary-color);
+}
+
+.text-success {
+    color: var(--secondary-color) !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: var(--dark-grey);
+    transition: color 0.5s ease;
+    margin: 0 10px;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link.active {
+    color: var(--secondary-color);
+}
+
+.navbar-toggler {
+    border-color: rgba(255,255,255,0.2);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* ========================= HERO SECTION ========================= */
+.hero-slide {
+     height: 100vh; /* pleine hauteur d’écran */
+    width: 100%;
+    background-size: cover;
+    background-position: center center;
+    color: var(--white);
+    text-align: center;
+    padding: 100px 20px;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.hero-slide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Overlay */
+    z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  max-width: 80%;
+}
+
+.hero-content h1 {
+  font-size: 3em;
+  margin-bottom: 0.5em;
+}
+
+.hero-content p {
+  font-size: 1.5em;
+  margin-bottom: 1em;
+}
+
+
+
+.btn {
+    color: var(--white);
+    background-color: var(--secondary-color);
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: var(--secondary-hover-color);
+}
+
+/* ========================= CONTENT SECTIONS ========================= */
+.matches-section, .player-highlights {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.titleSection1, .titleSection2 {
+    font-size: 2rem;
+    margin-bottom: 25px;
+    color: var(--secondary-color);
+}
+
+.title-section-3 {
+    font-size: 2rem;
+    margin-bottom: 25px;
+    color: var(--white);
+}
+
+/* ========================= CARDS (MATCHS & JOUEURS) ========================= */
+.card, .player-card {
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    border: none;
+}
+
+.card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0;
+    color: var(--dark-grey);
+    font-weight: 700;
+}
+
+.card :nth-child(2) {
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--dark-grey);
+    margin-bottom: 0.5rem;
+}
+
+.card :nth-child(3) {
+    font-size: 1.1rem;
+    color: var(--dark-grey);
+    opacity: 0.7;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.card p:last-child {
+    margin-bottom: 0;
+}
+
+/* ========================= ANIMATIONS Matchs en direct ========================= */
+
+/* Définit l'animation de clignotement */
+@keyframes blink-animation {
+  0% { opacity: 1; }
+  50% { opacity: 0.2; } /* On baisse l'opacité au lieu de 0 pour un effet moins agressif */
+  100% { opacity: 1; }
+}
+
+/* Classe à appliquer pour activer l'animation */
+.is-blinking {
+  animation: blink-animation 1.5s infinite;
+}
+
+/* ========================= PLAYER HIGHLIGHTS SECTION ========================= */
+.stats-buttons {
+    display: flex;
+    justify-content: center; /* Centrer sur mobile */
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+    gap: 15px;
+}
+
+.stats-buttons .btn {
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.stats-buttons .btn-green {
+    background-color: var(--secondary-color);
+}
+
+.stats-buttons .btn-green:hover {
+    background-color: #218838;
+}
+
+.stats-buttons .btn.active {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+.player-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.player-card img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--secondary-color);
+}
+
+.player-card .info {
+    text-align: center;
+}
+
+.player-card h3 {
+    font-size: 1.4rem;
+    color: #000;
+    margin-bottom: 4px;
+    font-weight: 800;
+}
+
+.player-card :nth-child(2) {/*Select the First paragraph of .player-card*/
+    margin-bottom: 4px;
+    font-weight: 700;
+    color: var(--dark-grey);
+    opacity: 0.8;
+}
+
+.player-card :nth-child(3) {/*Select the Second paragraph of .player-card*/
+    margin-bottom: 4px;
+    font-weight: 600;
+    color: #000;
+}
+
+.player-card p:last-child {
+    margin-bottom: 0;
+}
+
+/* ========================= ABOUT TOURNAMENT SECTION ========================= */
+.about-tournament {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    padding: 60px 20px;
+}
+
+.about-tournament .container {
+    text-align: left;
+}
+
+.about-tournament h2 {
+    font-size: 2.5rem;
+}
+
+.about-tournament p {
+    font-size: 1.34rem;
+    margin-bottom: 30px;
+}
+
+.about-tournament .btn-about {
+    background-color: var(--white);
+    color: var(--secondary-color);
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.about-tournament .btn-about:hover {
+    background-color: #eee;
+}
+
+/* ========================= FOOTER ========================= */
+.footer {
+    background-color: var(--white);
+    color: var(--dark-grey);
+    padding: 25px 0;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.footer-links a {
+    color: var(--dark-grey);
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--secondary-color);
+}
+
+.social-icons a {
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: var(--dark-grey);
+}
+
+
+
+/* ========================= CUSTOMIZATIONS & MEDIA QUERIES ========================= */
+
+/* Icônes de contrôle des carrousels sur fond sombre */
+.matches-section .carousel-control-prev-icon,
+.matches-section .carousel-control-next-icon,
+.player-highlights .carousel-control-prev-icon,
+.player-highlights .carousel-control-next-icon {
+    filter: invert(1);
+}
+
+@media (min-width: 768px) {
+    .stats-buttons {
+        justify-content: flex-start;
+    }
+}
+
+@media (min-width: 1200px) {
+    .player-card {
+        flex-direction: row;
+        gap: 40px;
+    }
+    .player-card .info {
+        text-align: left;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .navbar .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-content h1 { font-size: 2.5rem; }
+    .hero-content p { font-size: 1rem; }
+    .titleSection1, .titleSection2, .title-section-3 { font-size: 1.8rem; }
+    .about-tournament p { font-size: 1rem; }
+    .navbar .logo { font-size: 1.13rem; }
+}
+
+/* 
+  NOUVEAU : Règle pour masquer les contrôles de navigation
+  des carrousels inférieurs sur les écrans de type desktop.
+*/
+@media (min-width: 768px) { /* Cible les écrans à partir du point de rupture 'md' de Bootstrap */
+    
+    /* On sélectionne les boutons de contrôle SEULEMENT à l'intérieur 
+       des sections de contenu inférieures, et non du carrousel Hero. */
+    .matches-section .carousel-control-prev,
+    .matches-section .carousel-control-next,
+    .player-highlights .carousel-control-prev,
+    .player-highlights .carousel-control-next {
+        display: none;
+    }
+}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirection vers Login</title>
+    <script>
+        // Vérifie si c'est la première visite
+        if(!sessionStorage.getItem('alreadyVisited')) {
+            sessionStorage.setItem('alreadyVisited', 'true');
+            window.location.replace("/views/login.html");
+        } else {
+            window.location.href = "/views/index_ken.html";
+        }
+    </script>
+</head>
+<body>
+    <noscript>
+        <h1>JavaScript requis</h1>
+        <p>Veuillez <a href="/views/login.html">cliquer ici pour vous connecter</a>.</p>
+    </noscript>
+</body>
+</html>

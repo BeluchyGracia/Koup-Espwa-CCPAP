@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rejoignez la Ligue</title>
+    <link rel="stylesheet" href="/assets/css/design1.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+
+    <div class="container animate__animated animate__fadeIn">
+        <div class="icon-top">⚽</div>
+        <h1>Rejoignez la Ligue</h1>
+        <p class="subtitle">Créez votre compte pour le championnat local de football</p>
+        
+        <form id="registrationForm">
+            <div class="name-row">
+                <div class="form-group name-half">
+                    <label for="firstName">Prénom</label> 
+                    <input type="text" id="firstName" name="firstName" required>
+                </div>
+                
+                <div class="form-group name-half">
+                    <label for="lastName">Nom</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="gender">Genre</label>
+                <select id="gender" name="gender" required>
+                    <option value="" disabled selected>Sélectionnez votre genre</option> 
+                    <option value="male">Homme</option> 
+                    <option value="female">Femme</option> 
+                    <option value="other">Autre</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="username">Nom d'utilisateur</label>
+                <input type="text" id="username" name="username" required>
+                <p style="margin: 6px 0 0 0; font-size: 13px; color: var(--gray); font-weight: 400;">Nom affiché sur les calendriers et classements des matchs</p> 
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Mot de passe</label> 
+                <input type="password" id="password" name="password" required>
+                <div class="password-strength">
+                    <span class="password-strength-label">Solidité du mot de passe :</span> 
+                    <span class="password-strength-value" id="passwordStrengthValue">-</span>
+                </div>
+                <div class="password-strength-bar">
+                    <div class="password-strength-progress" id="passwordStrengthProgress"></div>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn">
+               S'inscrire maintenant 
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </button>
+        </form>
+        
+        <div class="login-link">
+            Vous avez déjà un compte ? <a href="login.html">Se connecter</a> 
+        </div>
+        
+        <div class="footer">
+            Nous n'utiliserons vos informations que pour gérer la participation des joueurs 
+        </div>
+    </div>
+
+    <script>
+    // Barre de solidité du mot de passe
+    const passwordInput = document.getElementById('password');
+    const strengthValue = document.getElementById('passwordStrengthValue');
+    const strengthProgress = document.getElementById('passwordStrengthProgress');
+
+    passwordInput.addEventListener('input', () => {
+        const val = passwordInput.value;
+        let strength = 0;
+        if (val.length > 5) strength += 1;
+        if (val.match(/[A-Z]/)) strength += 1;
+        if (val.match(/[0-9]/)) strength += 1;
+        if (val.match(/[\W]/)) strength += 1;
+
+        const strengthTexts = ['Très faible', 'Faible', 'Moyen', 'Fort', 'Très fort'];
+        strengthValue.innerText = strengthTexts[strength];
+        strengthProgress.style.width = (strength * 25) + '%';
+        strengthProgress.style.backgroundColor = ['#ccc', 'red', 'orange', 'blue', 'green'][strength];
+    });
+
+    // Inscription
+    document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const firstName = document.getElementById("firstName").value.trim();
+        const lastName = document.getElementById("lastName").value.trim();
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value;
+        const gender = document.getElementById("gender").value;
+
+        const nom_complet = `${firstName} ${lastName}`;
+        const role = 'joueur'; // ou 'manager'/'autre' si tu veux le demander via formulaire
+
+        try {
+            const res = await fetch('/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password, role, nom_complet })
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                localStorage.setItem("nom_complet", data.nom_complet);
+                window.location.href = data.redirect;
+            } else {
+                alert(data.error || "Erreur lors de l’inscription.");
+            }
+        } catch (err) {
+            console.error("Erreur serveur :", err);
+            alert("Impossible de s'inscrire pour le moment.");
+        }
+    });
+    </script>
+
+</body>
+</html>

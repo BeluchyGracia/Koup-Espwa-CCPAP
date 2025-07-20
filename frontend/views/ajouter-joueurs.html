@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un Joueur</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --light: #ecf0f1;
+            --dark: #34495e;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: var(--dark);
+        }
+        
+        .card {
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            border: none;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background-color: var(--secondary);
+            color: white;
+            padding: 1.5rem;
+            border-bottom: none;
+        }
+        
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border: none;
+            padding: 12px;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .position-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.8rem;
+            margin-right: 5px;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        .player-preview {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: none;
+        }
+        
+        .player-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h3><i class="bi bi-person-plus"></i> Ajouter un Nouveau Joueur</h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <form id="playerForm">
+                            <!-- Informations de base -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="playerName" class="form-label">Nom complet</label>
+                                    <input type="text" class="form-control" id="playerName" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="playerNumber" class="form-label">Numéro de maillot</label>
+                                    <input type="number" class="form-control" id="playerNumber" min="1" max="99" required>
+                                </div>
+                            </div>
+                            
+                            <!-- Équipe et poste -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="playerTeam" class="form-label">Équipe</label>
+                                    <select class="form-select" id="playerTeam" required>
+                                        <option value="">Chargement des équipes...</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="playerPosition" class="form-label">Poste</label>
+                                    <select class="form-select" id="playerPosition" required>
+                                        <option value="">Sélectionnez un poste</option>
+                                        <option value="Gardien">Gardien</option>
+                                        <option value="Défenseur">Défenseur</option>
+                                        <option value="Milieu">Milieu</option>
+                                        <option value="Attaquant">Attaquant</option>
+                                        <option value="Remplaçant">Remplaçant</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Aperçu du joueur -->
+                            <div class="player-preview" id="playerPreview">
+                                <h5>Aperçu du joueur</h5>
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="player-number" id="previewNumber">23</div>
+                                    <h4 class="mb-0" id="previewName">Nom du Joueur</h4>
+                                </div>
+                                <div>
+                                    <span class="position-badge" id="previewPosition">Poste</span>
+                                    <span class="text-muted" id="previewTeam">Équipe</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Bouton de soumission -->
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check-circle"></i> Enregistrer le Joueur
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+    <script>
+        // Charger les équipes au démarrage
+        async function loadTeams() {
+            try {
+                const response = await fetch('/api/equipes');
+                if (!response.ok) throw new Error('Erreur de chargement');
+                
+                const teams = await response.json();
+                const select = document.getElementById('playerTeam');
+                
+                select.innerHTML = '<option value="">Sélectionnez une équipe</option>';
+                
+                teams.forEach(team => {
+                    const option = document.createElement('option');
+                    option.value = team.id;
+                    option.textContent = team.nom;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erreur:', error);
+                document.getElementById('playerTeam').innerHTML = '<option value="">Erreur de chargement</option>';
+            }
+        }
+        
+        // Mettre à jour l'aperçu du joueur
+        function updatePreview() {
+            const name = document.getElementById('playerName').value;
+            const number = document.getElementById('playerNumber').value;
+            const position = document.getElementById('playerPosition').value;
+            const teamSelect = document.getElementById('playerTeam');
+            const team = teamSelect.options[teamSelect.selectedIndex]?.text || '';
+            
+            if (name || number || position || team) {
+                document.getElementById('playerPreview').style.display = 'block';
+                
+                if (name) document.getElementById('previewName').textContent = name;
+                if (number) document.getElementById('previewNumber').textContent = number;
+                if (position) document.getElementById('previewPosition').textContent = position;
+                if (team) document.getElementById('previewTeam').textContent = ` | ${team}`;
+            } else {
+                document.getElementById('playerPreview').style.display = 'none';
+            }
+        }
+        
+        // Écouteurs d'événements pour l'aperçu
+        ['playerName', 'playerNumber', 'playerPosition', 'playerTeam'].forEach(id => {
+            document.getElementById(id).addEventListener('input', updatePreview);
+        });
+        
+        // Enregistrement du joueur
+        document.getElementById('playerForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    // Désactiver le bouton pendant l'envoi
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Enregistrement...';
+
+    const playerData = {
+        nom: document.getElementById('playerName').value.trim(),
+        numero_maillot: parseInt(document.getElementById('playerNumber').value),
+        poste: document.getElementById('playerPosition').value,
+        equipe_id: document.getElementById('playerTeam').value
+    };
+
+    try {
+        const response = await fetch('/api/joueurs', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(playerData)
+        });
+
+        // Vérifier le type de contenu avant de parser
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            const text = await response.text();
+            throw new Error(`Réponse inattendue: ${text.substring(0, 100)}...`);
+        }
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.error || 'Erreur lors de l\'enregistrement');
+        }
+
+        // Succès
+        alert(`Joueur ${result.data.nom} enregistré avec succès (ID: ${result.joueurId})`);
+        this.reset();
+        document.getElementById('playerPreview').style.display = 'none';
+
+    } catch (error) {
+        console.error('Erreur:', error);
+        alert(`Erreur: ${error.message}`);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="bi bi-check-circle"></i> Enregistrer le Joueur';
+    }
+});
+        
+        // Chargement initial
+        document.addEventListener('DOMContentLoaded', loadTeams);
+    </script>
+</body>
+</html>

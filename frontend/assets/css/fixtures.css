@@ -1,0 +1,437 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* ========================= VARIABLES & RESET ========================= */
+:root {
+    --primary-color: #007bff; /* Bleu pour les boutons, etc. */
+    --secondary-color: #006400; /* Vert pour la section "à propos", etc. */
+    --secondary-hover-color: #00640088;
+    --dark-grey: #343a40;
+    --light-grey: #f8f9fa;
+    --white: #ffffff;
+    --red: #dc3545;
+    --yellow: #ffc107;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: var(--dark-grey);
+    background-color: var(--light-grey);
+}
+
+/* ========================= SOLUTION FOUC (Flash of Unstyled Content) ========================= */
+
+.text-secondary-custum {
+    color: var(--secondary-color) !important;
+}
+
+/* Cache les sections en attente de contenu JS pour éviter le "saut" visuel. */
+.loading-content {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out, visibility 0.4s;
+}
+
+/* ========================= BARRE DE NAVIGATION (NAVBAR) ========================= */
+.navbar {
+    background-color: var(--white);
+    padding: 10px 0;
+}
+
+.navbar .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+}
+
+.navbar .logo i {
+    margin-right: 10px;
+    color: var(--secondary-color);
+}
+
+.hamburger-menu-bg {
+    background-color: var(--secondary-color);
+}
+
+.text-success {
+    color: var(--secondary-color) !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: var(--dark-grey);
+    transition: color 0.5s ease;
+    margin: 0 10px;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link.active {
+    color: var(--secondary-color);
+}
+
+.navbar-toggler {
+    border-color: rgba(255,255,255,0.2);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* ========================= ZONE DE CONTENU PRINCIPAL ========================= */
+.custom-main-content {
+    padding: 30px 0; 
+}
+
+.custom-fixtures-heading {
+    font-size: 2em;
+    font-weight: 700;
+    color: #333;
+}
+
+.custom-dropdown-toggle {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    color: #4A4A4A;
+    padding: 8px 15px;
+    font-weight: 500;
+}
+
+.custom-dropdown-toggle:hover {
+    background-color: #f0f0f0;
+}
+
+/* Navigation par journée de match */
+.custom-matchday-nav {
+    gap: 15px; /* Espace entre les boutons */
+    overflow-x: auto; /* Active le défilement horizontal sur petits écrans */
+    padding-bottom: 10px; /* Espace pour la barre de défilement si présente */
+    -ms-overflow-style: none; /* Cache la barre pour IE/Edge */
+    scrollbar-width: none; /* Cache la barre pour Firefox */
+}
+
+.custom-matchday-nav::-webkit-scrollbar {
+    display: none; /* Cache la barre pour Chrome/Safari/Opera */
+}
+
+.custom-matchday-btn {
+    background-color: #e9ecef; /* Fond gris clair */
+    border: none;
+    border-radius: 20px;
+    padding: 8px 20px;
+    color: #555;
+    font-weight: 500;
+    white-space: nowrap; /* Empêche le retour à la ligne */
+    transition: background-color 0.3s, color 0.3s; /* AMÉLIORATION : transition douce */
+}
+
+.custom-matchday-btn:hover {
+    background-color: #d1d5da;
+    color: #333;
+}
+
+.custom-matchday-btn.active {
+    background-color: #800080; /* Violet pour la journée active */
+    color: #fff;
+    font-weight: 600;
+}
+
+/* ========================= ABOUT TOURNAMENT SECTION ========================= */
+.about-tournament {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    padding: 60px 20px;
+}
+
+.about-tournament .container {
+    text-align: left;
+}
+
+.about-tournament h2 {
+    font-size: 2.5rem;
+}
+
+.about-tournament p {
+    font-size: 1.34rem;
+    margin-bottom: 30px;
+}
+
+.about-tournament .btn-about {
+    background-color: var(--white);
+    color: var(--secondary-color);
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.about-tournament .btn-about:hover {
+    background-color: #eee;
+}
+
+/* ========================= FOOTER ========================= */
+.footer {
+    background-color: var(--white);
+    color: var(--dark-grey);
+    padding: 25px 0;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.footer-links a {
+    color: var(--dark-grey);
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--secondary-color);
+}
+
+.social-icons a {
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: var(--dark-grey);
+}
+
+/* Cartes des matchs */
+.fixture-date {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.custom-calendar-icon {
+    color: #800080; /* Icône de calendrier violette */
+    font-size: 1.3rem;
+}
+
+.custom-fixture-card {
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    border: none;
+    position: relative; /* Pour le positionnement du badge de statut */
+    padding: 20px; /* Marge intérieure */
+    min-height: 180px; /* Assure une hauteur constante */
+    display: flex; /* AMÉLIORATION : Pour un meilleur alignement du contenu */
+    flex-direction: column;
+}
+
+.custom-fixture-card .card-body {
+    flex-grow: 1; /* Permet au corps de la carte de prendre l'espace restant */
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-fixture-card .card-body > div:nth-of-type(2) {
+    flex-grow: 1; /* Cible le conteneur des boutons pour le pousser en bas */
+}
+
+
+.custom-group-badge {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+/* Couleurs de fond pour les groupes */
+.group-a-bg { background-color: #007bff; } /* Bleu */
+.group-b-bg { background-color: #fd7e14; } /* Orange */
+.group-c-bg { background-color: #6f42c1; } /* Indigo */
+.group-d-bg { background-color: #20c997; } /* Sarcelle */
+
+.team-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1; /* Permet aux équipes de prendre un espace égal */
+}
+
+.team-logo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 5px; /* Espace entre le logo et le nom */
+}
+
+.team-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px; /* Limite la largeur */
+}
+
+.stadium-info {
+    font-size: 0.85rem;
+    color: #777;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.match-time {
+    font-size: 2.2rem; /* Police plus grande pour l'heure */
+    font-weight: 700;
+    color: #333;
+    flex-shrink: 0; /* Empêche le rétrécissement */
+    margin: 0 15px; /* Espace autour de l'heure */
+}
+
+.vs-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #999;
+    flex-shrink: 0;
+    margin: 0 10px;
+}
+
+.custom-match-action-btn {
+    background-color: #e9ecef; /* Gris clair pour le bouton */
+    border: none;
+    border-radius: 20px;
+    padding: 6px 15px;
+    color: #555;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.custom-match-action-btn:hover {
+    background-color: #dee2e6;
+}
+
+.live-btn {
+    background-color: #ffc107; /* Jaune pour le bouton "en direct" */
+    color: #333;
+}
+
+.live-btn:hover {
+    background-color: #e0a800;
+}
+
+.custom-status-badge {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+/* Couleurs de fond pour les statuts */
+.scheduled-bg { background-color: #28a745; } /* Vert */
+.live-bg { background-color: #dc3545; } /* Rouge */
+.postponed-bg { background-color: #ffc107; } /* Jaune */
+
+/* ========================= RESPONSIVE (MOBILES) ========================= */
+@media (max-width: 767.98px) {
+    .custom-fixtures-heading {
+        font-size: 1.6em; /* Police réduite pour le titre sur mobile */
+    }
+
+    .team-info {
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        justify-content: flex-start; /* Aligne les éléments à gauche */
+    }
+
+    .team-info.text-end {
+        justify-content: flex-end; /* Aligne l'équipe à l'extérieur à droite */
+    }
+
+    .team-logo {
+        margin-bottom: 0;
+        margin-right: 8px;
+    }
+    
+    .team-info.text-end .team-logo {
+        margin-right: 0;
+        margin-left: 8px;
+        order: 1; /* Change l'ordre pour que le logo soit après le nom */
+    }
+
+    .team-name {
+        text-align: left;
+        max-width: calc(100% - 40px); /* Laisse de la place pour le logo */
+        white-space: normal;
+    }
+
+    .team-info.text-end .team-name {
+        text-align: right;
+    }
+
+    .stadium-info {
+        display: none; /* Cache l'info du stade pour ne pas surcharger */
+    }
+
+    .match-time {
+        font-size: 1.8rem;
+        margin: 10px 0; /* Marge verticale quand empilé */
+    }
+
+    .vs-text {
+        margin: 5px 0;
+    }
+
+    .navbar .logo { font-size: 1.13rem; }
+
+    /* AMÉLIORATION : Comportement d'empilement pour le bloc de match sur les petits écrans */
+    .fixture-matchup-mobile-stack {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+}
+
+/* ========================= PIED DE PAGE (FOOTER) ========================= */
+.footer {
+    background-color: var(--white);
+    color: var(--dark-grey);
+    padding: 25px 0;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.footer-links a {
+    color: var(--dark-grey);
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--secondary-color);
+}
+
+.social-icons a {
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: var(--dark-grey);
+}
