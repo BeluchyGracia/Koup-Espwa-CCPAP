@@ -1,61 +1,213 @@
 {
   "groupes": {
     "A": [
-      "6",
-      "9",
-      "17",
-      "16"
+      {
+        "id": "6",
+        "nom": "FC Backup",
+        "points": 3
+      },
+      {
+        "id": "9",
+        "nom": "FC Amazony",
+        "points": 1
+      },
+      {
+        "id": "16",
+        "nom": "Optimiste",
+        "points": 1
+      },
+      {
+        "id": "17",
+        "nom": "FC Ziggy Food",
+        "points": 0
+      }
     ],
     "B": [
-      "15",
-      "11",
-      "14",
-      "18"
+      {
+        "id": "15",
+        "nom": "Team Boloze",
+        "points": 3
+      },
+      {
+        "id": "11",
+        "nom": "Etoile D'or",
+        "points": 1
+      },
+      {
+        "id": "18",
+        "nom": "Nou Vinn Yon Lot Jan",
+        "points": 1
+      },
+      {
+        "id": "14",
+        "nom": "Team Family",
+        "points": 0
+      }
     ],
     "C": [
-      "8",
-      "19",
-      "13",
-      "21"
+      {
+        "id": "8",
+        "nom": "AntreNou Flanbwayan J.C",
+        "points": 3
+      },
+      {
+        "id": "19",
+        "nom": "FC The Boston",
+        "points": 1
+      },
+      {
+        "id": "21",
+        "nom": "Galaxy ",
+        "points": 1
+      },
+      {
+        "id": "13",
+        "nom": "Next-Gen",
+        "points": 0
+      }
     ],
     "D": [
-      "10",
-      "12",
-      "20",
-      "22"
+      {
+        "id": "10",
+        "nom": "Alpha",
+        "points": 1
+      },
+      {
+        "id": "12",
+        "nom": "FC Bon Bagay",
+        "points": 1
+      },
+      {
+        "id": "20",
+        "nom": "FC Stepper85",
+        "points": 1
+      },
+      {
+        "id": "22",
+        "nom": "Bazooka",
+        "points": 1
+      }
     ]
   },
   "quarts": [
     {
-      "equipe1": "",
-      "equipe2": ""
+      "equipe1": "23",
+      "nom1": "Equipe",
+      "equipe2": "",
+      "nom2": ""
     },
     {
       "equipe1": "",
-      "equipe2": ""
+      "nom1": "",
+      "equipe2": "",
+      "nom2": ""
     },
     {
       "equipe1": "",
-      "equipe2": ""
+      "nom1": "",
+      "equipe2": "",
+      "nom2": ""
     },
     {
       "equipe1": "",
-      "equipe2": ""
+      "nom1": "",
+      "equipe2": "",
+      "nom2": ""
     }
   ],
   "demis": [
     {
       "equipe1": "",
-      "equipe2": ""
+      "nom1": "",
+      "equipe2": "",
+      "nom2": ""
     },
     {
       "equipe1": "",
-      "equipe2": ""
+      "nom1": "",
+      "equipe2": "",
+      "nom2": ""
     }
   ],
   "finale": {
     "equipe1": "",
-    "equipe2": ""
+    "nom1": "",
+    "equipe2": "",
+    "nom2": ""
   },
-  "vainqueur": ""
+  "vainqueur": {
+    "id": "12",
+    "nom": "FC Bon Bagay"
+  },
+  "equipesDetails": [
+    {
+      "id": 6,
+      "nom": "FC Backup"
+    },
+    {
+      "id": 8,
+      "nom": "AntreNou Flanbwayan J.C"
+    },
+    {
+      "id": 9,
+      "nom": "FC Amazony"
+    },
+    {
+      "id": 10,
+      "nom": "Alpha"
+    },
+    {
+      "id": 11,
+      "nom": "Etoile D'or"
+    },
+    {
+      "id": 12,
+      "nom": "FC Bon Bagay"
+    },
+    {
+      "id": 13,
+      "nom": "Next-Gen"
+    },
+    {
+      "id": 14,
+      "nom": "Team Family"
+    },
+    {
+      "id": 15,
+      "nom": "Team Boloze"
+    },
+    {
+      "id": 16,
+      "nom": "Optimiste"
+    },
+    {
+      "id": 17,
+      "nom": "FC Ziggy Food"
+    },
+    {
+      "id": 18,
+      "nom": "Nou Vinn Yon Lot Jan"
+    },
+    {
+      "id": 19,
+      "nom": "FC The Boston"
+    },
+    {
+      "id": 20,
+      "nom": "FC Stepper85"
+    },
+    {
+      "id": 21,
+      "nom": "Galaxy "
+    },
+    {
+      "id": 22,
+      "nom": "Bazooka"
+    },
+    {
+      "id": 23,
+      "nom": "Equipe"
+    }
+  ],
+  "lastUpdated": "2025-07-28T16:44:23.348Z"
 }

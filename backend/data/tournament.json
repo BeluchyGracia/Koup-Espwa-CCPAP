@@ -1,0 +1,157 @@
+{
+  "metadata": {
+    "savedAt": "2025-07-22T15:45:08.675Z",
+    "version": "1.0"
+  },
+  "groupes": {
+    "A": [
+      {
+        "id": "6",
+        "nom": "Équipe 6",
+        "points": 3
+      },
+      {
+        "id": "ylznryi08",
+        "nom": "Équipe new",
+        "points": 0
+      },
+      {
+        "id": "1v6beskh9",
+        "nom": "Équipe new",
+        "points": 0
+      },
+      {
+        "id": "7ddgnztxm",
+        "nom": "Équipe new",
+        "points": 0
+      }
+    ],
+    "B": [
+      {
+        "id": "kuka1zjfr",
+        "nom": "Équipe new",
+        "points": 0
+      },
+      {
+        "id": "q8xencu0p",
+        "nom": "Équipe new",
+        "points": 0
+      },
+      {
+        "id": "gq2wchns9",
+        "nom": "Équipe new",
+        "points": 0
+      },
+      {
+        "id": "5ksnajwn8",
+        "nom": "Équipe new",
+        "points": 0
+      }
+    ],
+    "C": [
+      {
+        "id": "umurkwi3x",
+        "nom": "Équipe new",
+        "points": 0
+      },
+      {
+        "id": "f4o1h1nqv",
+        "nom": "Équipe new",
+        "points": 0
+      },
+      {
+        "id": "i0714hp9b",
+        "nom": "Équipe new",
+        "points": 0
+      },
+      {
+        "id": "el9yirs1d",
+        "nom": "Équipe new",
+        "points": 0
+      }
+    ],
+    "D": [
+      {
+        "id": "yvx68obp5",
+        "nom": "Équipe new",
+        "points": 0
+      },
+      {
+        "id": "7gtyoyhsh",
+        "nom": "Équipe new",
+        "points": 0
+      },
+      {
+        "id": "8y5c2za6a",
+        "nom": "Équipe new",
+        "points": 0
+      },
+      {
+        "id": "xsdt0nu26",
+        "nom": "Équipe new",
+        "points": 0
+      }
+    ]
+  },
+  "arbre": {
+    "quarts": [
+      {
+        "quart1": {
+          "equipe1": "",
+          "nom1": "",
+          "equipe2": "",
+          "nom2": ""
+        }
+      },
+      {
+        "quart2": {
+          "equipe1": "",
+          "nom1": "",
+          "equipe2": "",
+          "nom2": ""
+        }
+      },
+      {
+        "quart3": {
+          "equipe1": "",
+          "nom1": "",
+          "equipe2": "",
+          "nom2": ""
+        }
+      },
+      {
+        "quart4": {
+          "equipe1": "",
+          "nom1": "",
+          "equipe2": "",
+          "nom2": ""
+        }
+      }
+    ],
+    "demis": [
+      {
+        "demi1": {
+          "equipe1": "",
+          "nom1": "",
+          "equipe2": "",
+          "nom2": ""
+        }
+      },
+      {
+        "demi2": {
+          "equipe1": "",
+          "nom1": "",
+          "equipe2": "",
+          "nom2": ""
+        }
+      }
+    ],
+    "finale": {
+      "equipe1": "",
+      "nom1": "Finaliste 1",
+      "equipe2": "",
+      "nom2": "Finaliste 2"
+    },
+    "vainqueur": null
+  }
+}

@@ -24,28 +24,35 @@ let liveTournamentData = {
 };
 
 let tournamentData = {};
-try {
-    tournamentData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
-} catch (err) {
-    tournamentData = {
-        groupes: { A: [], B: [], C: [], D: [] },
-        arbre: {
-            quarts: [], 
-            demis: [], 
-            finale: {}, 
-            vainqueur: {}
-        }
-    };
-}
+// try {
+//     tournamentData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+// } catch (err) {
+//     tournamentData = {
+//         groupes: { A: [], B: [], C: [], D: [] },
+//         arbre: {
+//             quarts: [], 
+//             demis: [], 
+//             finale: {}, 
+//             vainqueur: {}
+//         }
+//     };
+// }
 
 function initDataFile() {
     if (!fs.existsSync(DATA_FILE)) {
         const defaultData = {
-            groupes: { A: [], B: [], C: [], D: [] },
-            quarts: Array(4).fill({ equipe1: '', equipe2: '' }),
-            demis: Array(2).fill({ equipe1: '', equipe2: '' }),
-            finale: { equipe1: '', equipe2: '' },
-            vainqueur: ''
+            groupes: {
+                A: Array(4).fill({ id: "", nom: "", points: 0 }),
+                B: Array(4).fill({ id: "", nom: "", points: 0 }),
+                C: Array(4).fill({ id: "", nom: "", points: 0 }),
+                D: Array(4).fill({ id: "", nom: "", points: 0 })
+            },
+            quarts: Array(4).fill({ equipe1: '', nom1: '', equipe2: '', nom2: '' }),
+            demis: Array(2).fill({ equipe1: '', nom1: '', equipe2: '', nom2: '' }),
+            finale: { equipe1: '', nom1: '', equipe2: '', nom2: '' },
+            vainqueur: { id: '', nom: '' },
+            equipesDetails: [],
+            lastUpdated: new Date().toISOString()
         };
         fs.writeFileSync(DATA_FILE, JSON.stringify(defaultData, null, 2));
     }
@@ -72,10 +79,6 @@ app.use((req, res, next) => {
     next();
 });
 
-
-
-
-
 // Connexion à la base de données SQLite
 const db = new sqlite3.Database(path.join(__dirname, 'database', 'championnat.db'), (err) => {
     if (err) {
@@ -85,15 +88,28 @@ const db = new sqlite3.Database(path.join(__dirname, 'database', 'championnat.db
     }
 });
 
+
+function broadcastData(data) {
+    const jsonData = JSON.stringify(data);
+    wss.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(jsonData);
+        }
+    });
+}
+
 // const wss = new WebSocket.Server({ server });
 
 wss.on('connection', (ws) => {
-    // Envoyer les données actuelles à la connexion
-    ws.send(JSON.stringify(liveTournamentData));
-    
-    ws.on('error', (error) => {
-        console.error('Erreur WebSocket:', error);
-    });
+    try {
+        if (fs.existsSync(DATA_FILE)) {
+            const currentData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+            ws.send(JSON.stringify(currentData));
+        }
+    } catch (e) {
+        console.error("Impossible d'envoyer les données initiales au client WebSocket", e);
+    }
+    ws.on('error', (error) => console.error('Erreur WebSocket:', error));
 });
 
 // Route principale
@@ -661,20 +677,29 @@ app.get('/api/matchs/upcoming', async (req, res) => {
                        d.nom AS equipe_dom, 
                        e.nom AS equipe_ext,
                        m.date_match,
+                       m.equipe_dom_id,
+                       m.equipe_ext_id,
                        m.stade
                 FROM matchs m
                 JOIN equipes d ON m.equipe_dom_id = d.id
                 JOIN equipes e ON m.equipe_ext_id = e.id
-                WHERE m.date_match > datetime('now')
+                WHERE m.id NOT IN (SELECT match_id FROM resultats)
                 ORDER BY m.date_match ASC
-                LIMIT 6
             `, [], (err, rows) => {
                 if (err) reject(err);
                 else resolve(rows);
             });
         });
 
+        if (!rows || rows.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "Aucun match à venir trouvé"
+            });
+        }
+
         res.json(rows);
+
     } catch (err) {
         console.error(err);
         res.status(500).json({
@@ -858,155 +883,172 @@ app.get('/redcards', (req, res) => {
 
 
 
-app.get('/api/tournament-data', (req, res) => {
-  const filePath = path.join(__dirname, '../frontend/data/calendrier.json');
+// app.get('/api/tournament-data', (req, res) => {
+//   const filePath = path.join(__dirname, '../frontend/data/calendrier.json');
 
-  if (!fs.existsSync(filePath)) {
-    return res.status(404).json({ error: 'Fichier non trouvé.' });
-  }
+//   if (!fs.existsSync(filePath)) {
+//     return res.status(404).json({ error: 'Fichier non trouvé.' });
+//   }
 
-  const json = fs.readFileSync(filePath, 'utf-8');
-  try {
-    const data = JSON.parse(json);
-    res.json(data);
-  } catch (err) {
-    res.status(500).json({ error: 'Fichier JSON invalide.' });
-  }
-});
+//   const json = fs.readFileSync(filePath, 'utf-8');
+//   try {
+//     const data = JSON.parse(json);
+//     res.json(data);
+//   } catch (err) {
+//     res.status(500).json({ error: 'Fichier JSON invalide.' });
+//   }
+// });
 
 // Routes API
-app.post('/api/update-live-view', (req, res) => {
-    try {
-        liveTournamentData = req.body;
+// app.post('/api/update-live-view', (req, res) => {
+//     try {
+//         liveTournamentData = req.body;
         
-        // Diffuser à tous les clients connectés
-        wss.clients.forEach(client => {
-            if (client.readyState === WebSocket.OPEN) {
-                client.send(JSON.stringify(liveTournamentData));
-            }
-        });
+//         // Diffuser à tous les clients connectés
+//         wss.clients.forEach(client => {
+//             if (client.readyState === WebSocket.OPEN) {
+//                 client.send(JSON.stringify(liveTournamentData));
+//             }
+//         });
         
-        res.json({ success: true });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
+//         res.json({ success: true });
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
+//     }
+// });
 
 
 
 // Route pour sauvegarder les modifications
 // Routes
-app.post('/api/save-tournament', (req, res) => {
+/**
+ * @description Récupère les données actuelles du tournoi depuis le fichier JSON.
+ */
+app.get('/api/get-tournament', (req, res) => {
     try {
-        const newData = req.body;
-        fs.writeFileSync(DATA_FILE, JSON.stringify(newData, null, 2));
+        if (fs.existsSync(DATA_FILE)) {
+            const tournamentData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+            res.json({ success: true, data: tournamentData });
+        } else {
+            initDataFile();
+            const tournamentData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+            res.json({ success: true, data: tournamentData });
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, error: 'Erreur serveur.' });
+    }
+});
+
+
+/**
+ * @description Sauvegarde l'état du tournoi en fusionnant les nouvelles données avec les données existantes.
+ *              Ceci préserve les informations des sessions précédentes.
+ */
+app.post('/api/save-tournament', async (req, res) => {
+    try {
+        const newDataFromClient = req.body;
         
-        // Diffuser à tous les clients WebSocket
-        wss.clients.forEach(client => {
-            if (client.readyState === WebSocket.OPEN) {
-                client.send(JSON.stringify(newData));
-            }
+        // Étape 1: Lire les données existantes du fichier pour ne pas repartir de zéro.
+        let finalData = {};
+        if (fs.existsSync(DATA_FILE)) {
+            finalData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+        } else {
+            // Si le fichier n'existe pas, l'initialiser
+            initDataFile();
+            finalData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+        }
+
+        // Récupérer les détails des équipes pour enrichir les données (nom de l'équipe)
+        const equipesDetails = await new Promise((resolve, reject) => {
+            db.all("SELECT id, nom FROM equipes", [], (err, rows) => {
+                if (err) reject(err); else resolve(rows);
+            });
         });
+
+        const getTeamName = (id) => {
+            if (!id) return '';
+            const equipe = equipesDetails.find(e => e.id.toString() === id.toString());
+            return equipe ? equipe.nom : '';
+        };
+
+        // Étape 2: Logique de fusion intelligente
         
+        // --- Fusion pour les Groupes ---
+        // On vérifie si les données des groupes envoyées par le client contiennent au moins une équipe.
+        // `flat()` transforme le tableau de tableaux en un seul, `some()` vérifie si au moins un élément est vrai.
+        const newGroupsHaveData = Object.values(newDataFromClient.groupes).flat().some(team => team.id);
+        
+        if (newGroupsHaveData) {
+            // Si oui, on met à jour la section 'groupes' de nos données finales.
+            finalData.groupes = {
+                A: newDataFromClient.groupes.A.map(t => ({ id: t.id, nom: getTeamName(t.id), points: parseInt(t.points) || 0 })),
+                B: newDataFromClient.groupes.B.map(t => ({ id: t.id, nom: getTeamName(t.id), points: parseInt(t.points) || 0 })),
+                C: newDataFromClient.groupes.C.map(t => ({ id: t.id, nom: getTeamName(t.id), points: parseInt(t.points) || 0 })),
+                D: newDataFromClient.groupes.D.map(t => ({ id: t.id, nom: getTeamName(t.id), points: parseInt(t.points) || 0 }))
+            };
+        }
+        // Si `newGroupsHaveData` est faux, on ne fait rien, conservant ainsi les données des groupes existantes dans `finalData`.
+
+        // --- Fusion pour l'arbre de tournoi (Quarts, Demis, Finale) ---
+        // On vérifie si des données ont été saisies pour l'arbre.
+        const newBracketHasData = newDataFromClient.quarts.some(q => q.equipe1 || q.equipe2);
+        if (newBracketHasData) {
+            finalData.quarts = newDataFromClient.quarts.map(q => ({
+                equipe1: q.equipe1, nom1: getTeamName(q.equipe1),
+                equipe2: q.equipe2, nom2: getTeamName(q.equipe2)
+            }));
+            finalData.demis = newDataFromClient.demis.map(d => ({
+                equipe1: d.equipe1, nom1: getTeamName(d.equipe1),
+                equipe2: d.equipe2, nom2: getTeamName(d.equipe2)
+            }));
+            finalData.finale = {
+                equipe1: newDataFromClient.finale.equipe1, nom1: getTeamName(newDataFromClient.finale.equipe1),
+                equipe2: newDataFromClient.finale.equipe2, nom2: getTeamName(newDataFromClient.finale.equipe2)
+            };
+        }
+
+        // --- Fusion pour le Vainqueur ---
+        // On vérifie si un vainqueur a été sélectionné.
+        const newWinnerIsSet = newDataFromClient.vainqueur && newDataFromClient.vainqueur !== '';
+        
+        if (newWinnerIsSet) {
+            // Si oui, on met à jour le vainqueur.
+            finalData.vainqueur = {
+                id: newDataFromClient.vainqueur,
+                nom: getTeamName(newDataFromClient.vainqueur)
+            };
+        }
+        // Si le champ vainqueur est envoyé vide, on conserve l'ancien vainqueur.
+        // Si vous souhaitez permettre de "réinitialiser" le vainqueur en le laissant vide, il faudrait ajuster cette logique.
+        // Mais pour l'instant, cela protège contre l'effacement accidentel.
+
+        // Étape 3: Mettre à jour les métadonnées et sauvegarder
+        finalData.equipesDetails = equipesDetails;
+        finalData.lastUpdated = new Date().toISOString();
+
+        fs.writeFileSync(DATA_FILE, JSON.stringify(finalData, null, 2));
+        broadcastData(finalData); // Informer les clients connectés de la mise à jour
+
+        res.json({ success: true, message: "Données fusionnées et mises à jour avec succès.", data: finalData });
+
+    } catch (error) {
+        console.error('Erreur lors de la sauvegarde du tournoi:', error);
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+
+/**
+ * @description Met à jour la vue en direct sans sauvegarder dans le fichier.
+ */
+app.post('/api/update-live-view', (req, res) => {
+    try {
+        liveTournamentData = req.body;
+        broadcastData(liveTournamentData);
         res.json({ success: true });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-});
-
-app.get('/api/get-tournament', async (req, res) => {
-    try {
-        // 1. Lire le fichier tournamentdata.json
-        const rawData = fs.readFileSync('./tournamentdata.json', 'utf8');
-        const tournamentData = JSON.parse(rawData);
-
-        // 2. Récupérer toutes les équipes depuis la DB
-        const equipes = await new Promise((resolve, reject) => {
-            db.all("SELECT id, nom FROM equipes", [], (err, rows) => {
-                if (err) reject(err);
-                else resolve(rows);
-            });
-        });
-
-        // 3. Fonction pour trouver le nom d'une équipe par son ID
-        const getNomEquipe = (id) => {
-            if (!id) return '';
-            const equipe = equipes.find(e => e.id.toString() === id.toString());
-            return equipe ? equipe.nom : `Équipe ${id}`;
-        };
-
-        // 4. Construire la réponse avec les noms d'équipes
-        const responseData = {
-            groupes: {},
-            quarts: [],
-            demis: [],
-            finale: {},
-            vainqueur: null
-        };
-
-        // Remplir les groupes
-        if (tournamentData.groupes) {
-            for (const [groupe, ids] of Object.entries(tournamentData.groupes)) {
-                responseData.groupes[groupe] = ids.map(id => ({
-                    id,
-                    nom: getNomEquipe(id)
-                }));
-            }
-        }
-
-        // Remplir les quarts de finale
-        if (tournamentData.quarts) {
-            responseData.quarts = tournamentData.quarts.map(quart => ({
-                equipe1: quart.equipe1,
-                nom1: getNomEquipe(quart.equipe1),
-                equipe2: quart.equipe2,
-                nom2: getNomEquipe(quart.equipe2)
-            }));
-        }
-
-        // Remplir les demi-finales
-        if (tournamentData.demis) {
-            responseData.demis = tournamentData.demis.map(demi => ({
-                equipe1: demi.equipe1,
-                nom1: getNomEquipe(demi.equipe1),
-                equipe2: demi.equipe2,
-                nom2: getNomEquipe(demi.equipe2)
-            }));
-        }
-
-        // Remplir la finale
-        if (tournamentData.finale) {
-            responseData.finale = {
-                equipe1: tournamentData.finale.equipe1,
-                nom1: getNomEquipe(tournamentData.finale.equipe1),
-                equipe2: tournamentData.finale.equipe2,
-                nom2: getNomEquipe(tournamentData.finale.equipe2)
-            };
-        }
-
-        // Remplir le vainqueur
-        if (tournamentData.vainqueur) {
-            responseData.vainqueur = {
-                id: tournamentData.vainqueur,
-                nom: getNomEquipe(tournamentData.vainqueur)
-            };
-        }
-
-        res.json({ success: true, data: responseData });
-
-    } catch (error) {
-        console.error('Erreur get-tournament:', error);
-        res.status(500).json({ 
-            success: false, 
-            error: 'Erreur serveur',
-            details: process.env.NODE_ENV === 'development' ? error.message : null
-        });
-    }
-});
-
-
-app.get('/api/get-tournament-live', (req, res) => {
-    res.json(liveTournamentData);
 });
 
 

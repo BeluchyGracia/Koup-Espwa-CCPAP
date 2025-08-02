@@ -102,6 +102,10 @@
             border-radius: 4px;
             border: 1px solid #ddd;
         }
+        .saved {
+    background-color: #2ecc71 !important;
+    transition: background-color 0.5s ease;
+}
     </style>
 </head>
 <body class="bg-light">
@@ -110,115 +114,215 @@
      
 
         <!-- Section pour configurer les groupes -->
-        <div class="mt-5">
-            <h3 class="text-center mb-4">Configuration des Groupes</h3>
-            
-            <div class="groups-container" id="groupsContainer">
-                <div class="group">
-                    <div class="group-header">Groupe A</div>
-                    <ul class="team-list">
-                        <li class="team-item">
-                            <select class="form-select groupeA">
-                                <option value="">Sélectionner équipe</option>
-                            </select>
-                        </li>
-                        <li class="team-item">
-                            <select class="form-select groupeA">
-                                <option value="">Sélectionner équipe</option>
-                            </select>
-                        </li>
-                        <li class="team-item">
-                            <select class="form-select groupeA">
-                                <option value="">Sélectionner équipe</option>
-                            </select>
-                        </li>
-                        <li class="team-item">
-                            <select class="form-select groupeA">
-                                <option value="">Sélectionner équipe</option>
-                            </select>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="group">
-                    <div class="group-header">Groupe B</div>
-                    <ul class="team-list">
-                        <li class="team-item">
-                            <select class="form-select groupeB">
-                                <option value="">Sélectionner équipe</option>
-                            </select>
-                        </li>
-                        <li class="team-item">
-                            <select class="form-select groupeB">
-                                <option value="">Sélectionner équipe</option>
-                            </select>
-                        </li>
-                        <li class="team-item">
-                            <select class="form-select groupeB">
-                                <option value="">Sélectionner équipe</option>
-                            </select>
-                        </li>
-                        <li class="team-item">
-                            <select class="form-select groupeB">
-                                <option value="">Sélectionner équipe</option>
-                            </select>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="group">
-                    <div class="group-header">Groupe C</div>
-                    <ul class="team-list">
-                        <li class="team-item">
-                            <select class="form-select groupeC">
-                                <option value="">Sélectionner équipe</option>
-                            </select>
-                        </li>
-                        <li class="team-item">
-                            <select class="form-select groupeC">
-                                <option value="">Sélectionner équipe</option>
-                            </select>
-                        </li>
-                        <li class="team-item">
-                            <select class="form-select groupeC">
-                                <option value="">Sélectionner équipe</option>
-                            </select>
-                        </li>
-                        <li class="team-item">
-                            <select class="form-select groupeC">
-                                <option value="">Sélectionner équipe</option>
-                            </select>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="group">
-                    <div class="group-header">Groupe D</div>
-                    <ul class="team-list">
-                        <li class="team-item">
-                            <select class="form-select groupeD">
-                                <option value="">Sélectionner équipe</option>
-                            </select>
-                        </li>
-                        <li class="team-item">
-                            <select class="form-select groupeD">
-                                <option value="">Sélectionner équipe</option>
-                            </select>
-                        </li>
-                        <li class="team-item">
-                            <select class="form-select groupeD">
-                                <option value="">Sélectionner équipe</option>
-                            </select>
-                        </li>
-                        <li class="team-item">
-                            <select class="form-select groupeD">
-                                <option value="">Sélectionner équipe</option>
-                            </select>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+<div class="mt-5">
+    <h3 class="text-center mb-4">Configuration des Groupes</h3>
+    
+    <div class="groups-container" id="groupsContainer">
+        <!-- Groupe A -->
+        <div class="group">
+            <div class="group-header">Groupe A</div>
+            <ul class="team-list">
+                <li class="team-item d-flex align-items-center gap-2 mb-2">
+                    <select class="form-select groupeA team-select">
+                        <option value="">Sélectionner équipe</option>
+                    </select>
+                    <select class="form-select points-select" style="width: 80px; display: none;">
+                        <option value="0">0 pts</option>
+                        <option value="1">1 pts</option>
+                        <option value="2">2 pts</option>
+                        <option value="3">3 pts</option>
+                    </select>
+                </li>
+                <li class="team-item d-flex align-items-center gap-2 mb-2">
+                    <select class="form-select groupeA team-select">
+                        <option value="">Sélectionner équipe</option>
+                    </select>
+                    <select class="form-select points-select" style="width: 80px; display: none;">
+                        <option value="0">0 pts</option>
+                        <option value="1">1 pts</option>
+                        <option value="2">2 pts</option>
+                        <option value="3">3 pts</option>
+                    </select>
+                </li>
+                <li class="team-item d-flex align-items-center gap-2 mb-2">
+                    <select class="form-select groupeA team-select">
+                        <option value="">Sélectionner équipe</option>
+                    </select>
+                    <select class="form-select points-select" style="width: 80px; display: none;">
+                        <option value="0">0 pts</option>
+                        <option value="1">1 pts</option>
+                        <option value="2">2 pts</option>
+                        <option value="3">3 pts</option>
+                    </select>
+                </li>
+                <li class="team-item d-flex align-items-center gap-2 mb-2">
+                    <select class="form-select groupeA team-select">
+                        <option value="">Sélectionner équipe</option>
+                    </select>
+                    <select class="form-select points-select" style="width: 80px; display: none;">
+                        <option value="0">0 pts</option>
+                        <option value="1">1 pts</option>
+                        <option value="2">2 pts</option>
+                        <option value="3">3 pts</option>
+                    </select>
+                </li>
+            </ul>
         </div>
+        
+        <!-- Groupe B -->
+        <div class="group">
+            <div class="group-header">Groupe B</div>
+            <ul class="team-list">
+                <li class="team-item d-flex align-items-center gap-2 mb-2">
+                    <select class="form-select groupeB team-select">
+                        <option value="">Sélectionner équipe</option>
+                    </select>
+                    <select class="form-select points-select" style="width: 80px; display: none;">
+                        <option value="0">0 pts</option>
+                        <option value="1">1 pts</option>
+                        <option value="2">2 pts</option>
+                        <option value="3">3 pts</option>
+                    </select>
+                </li>
+                <li class="team-item d-flex align-items-center gap-2 mb-2">
+                    <select class="form-select groupeB team-select">
+                        <option value="">Sélectionner équipe</option>
+                    </select>
+                    <select class="form-select points-select" style="width: 80px; display: none;">
+                        <option value="0">0 pts</option>
+                        <option value="1">1 pts</option>
+                        <option value="2">2 pts</option>
+                        <option value="3">3 pts</option>
+                    </select>
+                </li>
+                <li class="team-item d-flex align-items-center gap-2 mb-2">
+                    <select class="form-select groupeB team-select">
+                        <option value="">Sélectionner équipe</option>
+                    </select>
+                    <select class="form-select points-select" style="width: 80px; display: none;">
+                        <option value="0">0 pts</option>
+                        <option value="1">1 pts</option>
+                        <option value="2">2 pts</option>
+                        <option value="3">3 pts</option>
+                    </select>
+                </li>
+                <li class="team-item d-flex align-items-center gap-2 mb-2">
+                    <select class="form-select groupeB team-select">
+                        <option value="">Sélectionner équipe</option>
+                    </select>
+                    <select class="form-select points-select" style="width: 80px; display: none;">
+                        <option value="0">0 pts</option>
+                        <option value="1">1 pts</option>
+                        <option value="2">2 pts</option>
+                        <option value="3">3 pts</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Groupe C -->
+        <div class="group">
+            <div class="group-header">Groupe C</div>
+            <ul class="team-list">
+                <li class="team-item d-flex align-items-center gap-2 mb-2">
+                    <select class="form-select groupeC team-select">
+                        <option value="">Sélectionner équipe</option>
+                    </select>
+                    <select class="form-select points-select" style="width: 80px; display: none;">
+                        <option value="0">0 pts</option>
+                        <option value="1">1 pts</option>
+                        <option value="2">2 pts</option>
+                        <option value="3">3 pts</option>
+                    </select>
+                </li>
+                <li class="team-item d-flex align-items-center gap-2 mb-2">
+                    <select class="form-select groupeC team-select">
+                        <option value="">Sélectionner équipe</option>
+                    </select>
+                    <select class="form-select points-select" style="width: 80px; display: none;">
+                        <option value="0">0 pts</option>
+                        <option value="1">1 pts</option>
+                        <option value="2">2 pts</option>
+                        <option value="3">3 pts</option>
+                    </select>
+                </li>
+                <li class="team-item d-flex align-items-center gap-2 mb-2">
+                    <select class="form-select groupeC team-select">
+                        <option value="">Sélectionner équipe</option>
+                    </select>
+                    <select class="form-select points-select" style="width: 80px; display: none;">
+                        <option value="0">0 pts</option>
+                        <option value="1">1 pts</option>
+                        <option value="2">2 pts</option>
+                        <option value="3">3 pts</option>
+                    </select>
+                </li>
+                <li class="team-item d-flex align-items-center gap-2 mb-2">
+                    <select class="form-select groupeC team-select">
+                        <option value="">Sélectionner équipe</option>
+                    </select>
+                    <select class="form-select points-select" style="width: 80px; display: none;">
+                        <option value="0">0 pts</option>
+                        <option value="1">1 pts</option>
+                        <option value="2">2 pts</option>
+                        <option value="3">3 pts</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Groupe D -->
+        <div class="group">
+            <div class="group-header">Groupe D</div>
+            <ul class="team-list">
+                <li class="team-item d-flex align-items-center gap-2 mb-2">
+                    <select class="form-select groupeD team-select">
+                        <option value="">Sélectionner équipe</option>
+                    </select>
+                    <select class="form-select points-select" style="width: 80px; display: none;">
+                        <option value="0">0 pts</option>
+                        <option value="1">1 pts</option>
+                        <option value="2">2 pts</option>
+                        <option value="3">3 pts</option>
+                    </select>
+                </li>
+                <li class="team-item d-flex align-items-center gap-2 mb-2">
+                    <select class="form-select groupeD team-select">
+                        <option value="">Sélectionner équipe</option>
+                    </select>
+                    <select class="form-select points-select" style="width: 80px; display: none;">
+                        <option value="0">0 pts</option>
+                        <option value="1">1 pts</option>
+                        <option value="2">2 pts</option>
+                        <option value="3">3 pts</option>
+                    </select>
+                </li>
+                <li class="team-item d-flex align-items-center gap-2 mb-2">
+                    <select class="form-select groupeD team-select">
+                        <option value="">Sélectionner équipe</option>
+                    </select>
+                    <select class="form-select points-select" style="width: 80px; display: none;">
+                        <option value="0">0 pts</option>
+                        <option value="1">1 pts</option>
+                        <option value="2">2 pts</option>
+                        <option value="3">3 pts</option>
+                    </select>
+                </li>
+                <li class="team-item d-flex align-items-center gap-2 mb-2">
+                    <select class="form-select groupeD team-select">
+                        <option value="">Sélectionner équipe</option>
+                    </select>
+                    <select class="form-select points-select" style="width: 80px; display: none;">
+                        <option value="0">0 pts</option>
+                        <option value="1">1 pts</option>
+                        <option value="2">2 pts</option>
+                        <option value="3">3 pts</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 
         <!-- Section pour configurer l'arbre de tournoi -->
         <div class="mt-5">
@@ -231,48 +335,48 @@
                         <div class="round-title">Quarts de finale</div>
                         <div class="match-pair">
                             <div class="match-team">
-                                <select class="form-select quart-equipe" id="quart1_equipe1">
+                                <select class="form-select quart-equipe team-select" id="quart1_equipe1">
                                     <option value="">Sélectionner équipe</option>
                                 </select>
                             </div>
                             <div class="match-team">
-                                <select class="form-select quart-equipe" id="quart1_equipe2">
-                                    <option value="">Sélectionner équipe</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="match-pair">
-                            <div class="match-team">
-                                <select class="form-select quart-equipe" id="quart2_equipe1">
-                                    <option value="">Sélectionner équipe</option>
-                                </select>
-                            </div>
-                            <div class="match-team">
-                                <select class="form-select quart-equipe" id="quart2_equipe2">
+                                <select class="form-select quart-equipe team-select" id="quart1_equipe2">
                                     <option value="">Sélectionner équipe</option>
                                 </select>
                             </div>
                         </div>
                         <div class="match-pair">
                             <div class="match-team">
-                                <select class="form-select quart-equipe" id="quart3_equipe1">
+                                <select class="form-select quart-equipe team-select" id="quart2_equipe1">
                                     <option value="">Sélectionner équipe</option>
                                 </select>
                             </div>
                             <div class="match-team">
-                                <select class="form-select quart-equipe" id="quart3_equipe2">
+                                <select class="form-select quart-equipe team-select" id="quart2_equipe2">
                                     <option value="">Sélectionner équipe</option>
                                 </select>
                             </div>
                         </div>
                         <div class="match-pair">
                             <div class="match-team">
-                                <select class="form-select quart-equipe" id="quart4_equipe1">
+                                <select class="form-select quart-equipe team-select" id="quart3_equipe1">
                                     <option value="">Sélectionner équipe</option>
                                 </select>
                             </div>
                             <div class="match-team">
-                                <select class="form-select quart-equipe" id="quart4_equipe2">
+                                <select class="form-select quart-equipe team-select" id="quart3_equipe2">
+                                    <option value="">Sélectionner équipe</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="match-pair">
+                            <div class="match-team">
+                                <select class="form-select quart-equipe team-select" id="quart4_equipe1">
+                                    <option value="">Sélectionner équipe</option>
+                                </select>
+                            </div>
+                            <div class="match-team">
+                                <select class="form-select quart-equipe team-select" id="quart4_equipe2">
                                     <option value="">Sélectionner équipe</option>
                                 </select>
                             </div>
@@ -284,24 +388,24 @@
                         <div class="round-title">Demi-finales</div>
                         <div class="match-pair">
                             <div class="match-team">
-                                <select class="form-select demi-equipe" id="demi1_equipe1">
+                                <select class="form-select demi-equipe team-select" id="demi1_equipe1">
                                     <option value="">Sélectionner équipe</option>
                                 </select>
                             </div>
                             <div class="match-team">
-                                <select class="form-select demi-equipe" id="demi1_equipe2">
+                                <select class="form-select demi-equipe team-select" id="demi1_equipe2">
                                     <option value="">Sélectionner équipe</option>
                                 </select>
                             </div>
                         </div>
                         <div class="match-pair">
                             <div class="match-team">
-                                <select class="form-select demi-equipe" id="demi2_equipe1">
+                                <select class="form-select demi-equipe team-select" id="demi2_equipe1">
                                     <option value="">Sélectionner équipe</option>
                                 </select>
                             </div>
                             <div class="match-team">
-                                <select class="form-select demi-equipe" id="demi2_equipe2">
+                                <select class="form-select demi-equipe team-select" id="demi2_equipe2">
                                     <option value="">Sélectionner équipe</option>
                                 </select>
                             </div>
@@ -313,18 +417,18 @@
                         <div class="round-title">Finale</div>
                         <div class="match-pair">
                             <div class="match-team">
-                                <select class="form-select final-equipe" id="final_equipe1">
+                                <select class="form-select final-equipe team-select" id="final_equipe1">
                                     <option value="">Sélectionner équipe</option>
                                 </select>
                             </div>
                             <div class="match-team">
-                                <select class="form-select final-equipe" id="final_equipe2">
+                                <select class="form-select final-equipe team-select" id="final_equipe2">
                                     <option value="">Sélectionner équipe</option>
                                 </select>
                             </div>
                         </div>
                         <div class="match-team winner">
-                            <select class="form-select" id="vainqueur">
+                            <select class="form-select team-select" id="vainqueur">
                                 <option value="">Sélectionner vainqueur</option>
                             </select>
                         </div>
@@ -347,9 +451,9 @@
             
             const equipes = await response.json();
             
-            // Remplir tous les dropdowns
-            const selects = document.querySelectorAll('.form-select');
-            selects.forEach(select => {
+            // Remplir tous les dropdowns d'équipes
+            const teamSelects = document.querySelectorAll('.team-select');
+            teamSelects.forEach(select => {
                 // Garder l'option par défaut
                 while (select.options.length > 1) {
                     select.remove(1);
@@ -360,7 +464,7 @@
                     const option = document.createElement('option');
                     option.value = equipe.id;
                     option.textContent = equipe.nom;
-                    option.setAttribute('data-nom', equipe.nom); // Stocker le nom en attribut
+                    option.setAttribute('data-nom', equipe.nom);
                     select.appendChild(option);
                 });
             });
@@ -368,6 +472,29 @@
             console.error('Erreur chargement équipes:', error);
             alert("Erreur lors du chargement des équipes: " + error.message);
         }
+    }
+
+    // Gérer l'affichage des sélecteurs de points
+    function setupPointsSelectors() {
+        document.querySelectorAll('.team-select').forEach(select => {
+            // Gérer le changement de sélection
+            select.addEventListener('change', function() {
+                // Check if the points selector exists for this team item (it only does for groups)
+                const pointsSelect = this.closest('.team-item')?.querySelector('.points-select');
+                if (pointsSelect) {
+                    pointsSelect.style.display = this.value ? 'block' : 'none';
+                }
+                
+                // Mettre à jour la vue en direct
+                updateLiveView();
+            });
+
+            // Initialiser l'état des sélecteurs de points (only if it exists)
+            const initialPointsSelect = select.closest('.team-item')?.querySelector('.points-select');
+            if (select.value && initialPointsSelect) {
+                initialPointsSelect.style.display = 'block';
+            }
+        });
     }
 
     // Charger les données existantes au démarrage
@@ -386,20 +513,31 @@
                 return;
             }
 
-            // Remplir les groupes
+            // Remplir les groupes avec les points
             if (config.data.groupes) {
                 for (const [groupe, equipes] of Object.entries(config.data.groupes)) {
                     const selects = document.querySelectorAll(`.${groupe}`);
                     equipes.forEach((equipe, index) => {
                         if (selects[index] && equipe.id) {
+                            // Sélectionner l'équipe
                             selects[index].value = equipe.id;
+                            
+                            // Mettre à jour les points si disponibles
+                            if (equipe.points !== undefined) {
+                                const pointsSelect = selects[index].closest('.team-item').querySelector('.points-select');
+                                if (pointsSelect) {
+                                    pointsSelect.value = equipe.points;
+                                    pointsSelect.style.display = 'block';
+                                }
+                            }
+                            
                             selects[index].dispatchEvent(new Event('change'));
                         }
                     });
                 }
             }
             
-            // Remplir les quarts de finale
+            // Remplir les quarts de finale (reste inchangé)
             if (config.data.quarts) {
                 config.data.quarts.forEach((quart, index) => {
                     const quartNum = index + 1;
@@ -417,7 +555,7 @@
                 });
             }
             
-            // Remplir les demi-finales
+            // Remplir les demi-finales (reste inchangé)
             if (config.data.demis) {
                 config.data.demis.forEach((demi, index) => {
                     const demiNum = index + 1;
@@ -435,7 +573,7 @@
                 });
             }
             
-            // Remplir la finale
+            // Remplir la finale (reste inchangé)
             if (config.data.finale) {
                 const equipe1Select = document.getElementById('final_equipe1');
                 const equipe2Select = document.getElementById('final_equipe2');
@@ -450,7 +588,7 @@
                 }
             }
             
-            // Remplir le vainqueur
+            // Remplir le vainqueur (reste inchangé)
             if (config.data.vainqueur && config.data.vainqueur.id) {
                 const vainqueurSelect = document.getElementById('vainqueur');
                 if (vainqueurSelect) {
@@ -468,71 +606,153 @@
     // Connexion WebSocket
     const tournamentSocket = new WebSocket(`ws://${window.location.host}`);
 
-    // Fonction pour envoyer les données en temps réel
-    function updateLiveView() {
-        const tournamentData = {
-            groupes: {
-                A: Array.from(document.querySelectorAll('.groupeA')).map(select => ({
-                    id: select.value,
-                    nom: select.options[select.selectedIndex]?.text || ''
-                })),
-                B: Array.from(document.querySelectorAll('.groupeB')).map(select => ({
-                    id: select.value,
-                    nom: select.options[select.selectedIndex]?.text || ''
-                })),
-                C: Array.from(document.querySelectorAll('.groupeC')).map(select => ({
-                    id: select.value,
-                    nom: select.options[select.selectedIndex]?.text || ''
-                })),
-                D: Array.from(document.querySelectorAll('.groupeD')).map(select => ({
-                    id: select.value,
-                    nom: select.options[select.selectedIndex]?.text || ''
-                }))
-            },
-            arbre: {
-                quarts: Array.from({ length: 4 }, (_, i) => ({
-                    equipe1: document.getElementById(`quart${i+1}_equipe1`).value,
-                    nom1: document.getElementById(`quart${i+1}_equipe1`).options[document.getElementById(`quart${i+1}_equipe1`).selectedIndex]?.text || '',
-                    equipe2: document.getElementById(`quart${i+1}_equipe2`).value,
-                    nom2: document.getElementById(`quart${i+1}_equipe2`).options[document.getElementById(`quart${i+1}_equipe2`).selectedIndex]?.text || ''
-                })),
-                demis: Array.from({ length: 2 }, (_, i) => ({
-                    equipe1: document.getElementById(`demi${i+1}_equipe1`).value,
-                    nom1: document.getElementById(`demi${i+1}_equipe1`).options[document.getElementById(`demi${i+1}_equipe1`).selectedIndex]?.text || '',
-                    equipe2: document.getElementById(`demi${i+1}_equipe2`).value,
-                    nom2: document.getElementById(`demi${i+1}_equipe2`).options[document.getElementById(`demi${i+1}_equipe2`).selectedIndex]?.text || ''
-                })),
-                finale: {
-                    equipe1: document.getElementById('final_equipe1').value,
-                    nom1: document.getElementById('final_equipe1').options[document.getElementById('final_equipe1').selectedIndex]?.text || '',
-                    equipe2: document.getElementById('final_equipe2').value,
-                    nom2: document.getElementById('final_equipe2').options[document.getElementById('final_equipe2').selectedIndex]?.text || ''
-                },
-                vainqueur: {
-                    id: document.getElementById('vainqueur').value,
-                    nom: document.getElementById('vainqueur').options[document.getElementById('vainqueur').selectedIndex]?.text || ''
-                }
-            }
-        };
-
-        if (tournamentSocket.readyState === WebSocket.OPEN) {
-            tournamentSocket.send(JSON.stringify(tournamentData));
-        } else {
-            fetch('/api/update-live-view', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(tournamentData)
-            }).catch(console.error);
+    // Fonction pour envoyer les données en temps réel (mise à jour avec les points)
+ function updateLiveView() {
+    // Récupère toutes les options d'équipes pour avoir accès aux noms complets
+    const teamOptions = {};
+    document.querySelectorAll('.team-select option').forEach(option => {
+        if (option.value) {
+            teamOptions[option.value] = option.text;
         }
+    });
+
+    // Construit l'objet complet des données du tournoi
+    const tournamentData = {
+        groupes: {
+            A: Array.from(document.querySelectorAll('.groupeA')).map(select => {
+                const pointsSelect = select.closest('.team-item').querySelector('.points-select');
+                return {
+                    id: select.value,
+                    nom: select.value ? teamOptions[select.value] || `Équipe ${select.value}` : '',
+                    points: pointsSelect ? parseInt(pointsSelect.value) || 0 : 0
+                };
+            }),
+            B: Array.from(document.querySelectorAll('.groupeB')).map(select => {
+                const pointsSelect = select.closest('.team-item').querySelector('.points-select');
+                return {
+                    id: select.value,
+                    nom: select.value ? teamOptions[select.value] || `Équipe ${select.value}` : '',
+                    points: pointsSelect ? parseInt(pointsSelect.value) || 0 : 0
+                };
+            }),
+            C: Array.from(document.querySelectorAll('.groupeC')).map(select => {
+                const pointsSelect = select.closest('.team-item').querySelector('.points-select');
+                return {
+                    id: select.value,
+                    nom: select.value ? teamOptions[select.value] || `Équipe ${select.value}` : '',
+                    points: pointsSelect ? parseInt(pointsSelect.value) || 0 : 0
+                };
+            }),
+            D: Array.from(document.querySelectorAll('.groupeD')).map(select => {
+                const pointsSelect = select.closest('.team-item').querySelector('.points-select');
+                return {
+                    id: select.value,
+                    nom: select.value ? teamOptions[select.value] || `Équipe ${select.value}` : '',
+                    points: pointsSelect ? parseInt(pointsSelect.value) || 0 : 0
+                };
+            })
+        },
+        arbre: {
+            quarts: Array.from({ length: 4 }, (_, i) => {
+                const equipe1Select = document.getElementById(`quart${i+1}_equipe1`);
+                const equipe2Select = document.getElementById(`quart${i+1}_equipe2`);
+                return {
+                    equipe1: equipe1Select.value,
+                    nom1: equipe1Select.value ? teamOptions[equipe1Select.value] || `Équipe ${equipe1Select.value}` : '',
+                    equipe2: equipe2Select.value,
+                    nom2: equipe2Select.value ? teamOptions[equipe2Select.value] || `Équipe ${equipe2Select.value}` : ''
+                };
+            }),
+            demis: Array.from({ length: 2 }, (_, i) => {
+                const equipe1Select = document.getElementById(`demi${i+1}_equipe1`);
+                const equipe2Select = document.getElementById(`demi${i+1}_equipe2`);
+                return {
+                    equipe1: equipe1Select.value,
+                    nom1: equipe1Select.value ? teamOptions[equipe1Select.value] || `Équipe ${equipe1Select.value}` : '',
+                    equipe2: equipe2Select.value,
+                    nom2: equipe2Select.value ? teamOptions[equipe2Select.value] || `Équipe ${equipe2Select.value}` : ''
+                };
+            }),
+            finale: {
+                equipe1: document.getElementById('final_equipe1').value,
+                nom1: document.getElementById('final_equipe1').value ? 
+                    teamOptions[document.getElementById('final_equipe1').value] || 
+                    `Équipe ${document.getElementById('final_equipe1').value}` : '',
+                equipe2: document.getElementById('final_equipe2').value,
+                nom2: document.getElementById('final_equipe2').value ? 
+                    teamOptions[document.getElementById('final_equipe2').value] || 
+                    `Équipe ${document.getElementById('final_equipe2').value}` : ''
+            },
+            vainqueur: {
+                id: document.getElementById('vainqueur').value,
+                nom: document.getElementById('vainqueur').value ? 
+                    teamOptions[document.getElementById('vainqueur').value] || 
+                    `Équipe ${document.getElementById('vainqueur').value}` : ''
+            }
+        },
+        lastUpdated: new Date().toISOString()
+    };
+
+    // Envoi via WebSocket si disponible, sinon via API
+    if (tournamentSocket.readyState === WebSocket.OPEN) {
+        tournamentSocket.send(JSON.stringify(tournamentData));
+    } else {
+        // Fallback à une requête HTTP si le WebSocket n'est pas disponible
+        fetch('/api/update-live-view', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(tournamentData)
+        }).catch(error => {
+            console.error("Erreur lors de l'envoi des données:", error);
+        });
     }
 
+    // Mise à jour visuelle dans l'interface admin
+    highlightUpdatedElements();
+}
+
+function highlightUpdatedElements() {
+    // Animation visuelle pour montrer que les données ont été envoyées
+    const saveButton = document.getElementById('saveTournament');
+    saveButton.classList.add('saved');
+    setTimeout(() => saveButton.classList.remove('saved'), 1000);
+}
+
+// Ajoutez ce CSS :
+
+
+    // Sauvegarde des données (mise à jour avec les points)
     document.getElementById('saveTournament').addEventListener('click', async function() {
         const tournamentData = {
             groupes: {
-                A: Array.from(document.querySelectorAll('.groupeA')).map(s => s.value),
-                B: Array.from(document.querySelectorAll('.groupeB')).map(s => s.value),
-                C: Array.from(document.querySelectorAll('.groupeC')).map(s => s.value),
-                D: Array.from(document.querySelectorAll('.groupeD')).map(s => s.value)
+                A: Array.from(document.querySelectorAll('.groupeA')).map(select => {
+                    const pointsSelect = select.closest('.team-item').querySelector('.points-select');
+                    return {
+                        id: select.value,
+                        points: pointsSelect ? parseInt(pointsSelect.value) : 0
+                    };
+                }),
+                B: Array.from(document.querySelectorAll('.groupeB')).map(select => {
+                    const pointsSelect = select.closest('.team-item').querySelector('.points-select');
+                    return {
+                        id: select.value,
+                        points: pointsSelect ? parseInt(pointsSelect.value) : 0
+                    };
+                }),
+                C: Array.from(document.querySelectorAll('.groupeC')).map(select => {
+                    const pointsSelect = select.closest('.team-item').querySelector('.points-select');
+                    return {
+                        id: select.value,
+                        points: pointsSelect ? parseInt(pointsSelect.value) : 0
+                    };
+                }),
+                D: Array.from(document.querySelectorAll('.groupeD')).map(select => {
+                    const pointsSelect = select.closest('.team-item').querySelector('.points-select');
+                    return {
+                        id: select.value,
+                        points: pointsSelect ? parseInt(pointsSelect.value) : 0
+                    };
+                })
             },
             quarts: Array.from({ length: 4 }, (_, i) => ({
                 equipe1: document.getElementById(`quart${i+1}_equipe1`).value,
@@ -563,9 +783,9 @@
         }
     });
 
-    // Écouter les changements sur tous les selects
-    document.querySelectorAll('.form-select').forEach(select => {
-        select.addEventListener('change', updateLiveView);
+    // Écouter les changements sur tous les selects et points
+    document.querySelectorAll('.form-select, .points-select').forEach(select => {
+        select.addEventListener('change', updateLiveView);  
     });
 
     // Gestion des erreurs WebSocket
@@ -574,6 +794,7 @@
 
     // Initialisation
     document.addEventListener('DOMContentLoaded', () => {
+        setupPointsSelectors();
         chargerEquipes().then(chargerConfigurationExistante)
                        .then(() => setTimeout(updateLiveView, 1000));
     });

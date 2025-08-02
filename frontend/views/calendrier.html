@@ -178,6 +178,37 @@
             font-weight: bold;
         }
 
+        /* Ajoutez ce bloc à votre CSS existant */
+
+.team-item {
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+
+    /* Ajouts pour l'alignement des points */
+    display: flex; /* Active Flexbox */
+    justify-content: space-between; /* Pousse les éléments aux extrémités */
+    align-items: center; /* Centre les éléments verticalement */
+}
+
+.team-name {
+    /* Style pour le nom de l'équipe (optionnel) */
+    font-weight: 500;
+}
+
+.team-points {
+    /* Style pour les points */
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    font-size: 0.85rem;
+    padding: 3px 8px;
+    border-radius: 12px; /* Pour un effet "pilule" */
+    min-width: 40px; /* Assure un alignement visuel constant */
+    text-align: center;
+}
+
         @media (max-width: 768px) {
             .bracket-container {
                 flex-direction: column;
@@ -254,45 +285,45 @@
         <!-- Quarts de finale -->
         <div class="bracket-round">
             <div class="round-title">Quarts de finale</div>
-            <div class="match-pair">
-                <div class="match-team">Équipe A1</div>
-                <div class="match-team">Équipe B2</div>
+            <div class="match-pair" id="quart-0">
+                <div class="match-team"></div>
+                <div class="match-team"></div>
             </div>
-            <div class="match-pair">
-                <div class="match-team">Équipe B1</div>
-                <div class="match-team">Équipe A2</div>
+            <div class="match-pair" id="quart-1">
+                <div class="match-team"></div>
+                <div class="match-team"></div>
             </div>
-            <div class="match-pair">
-                <div class="match-team">Équipe C1</div>
-                <div class="match-team">Équipe D2</div>
+            <div class="match-pair" id="quart-2">
+                <div class="match-team"></div>
+                <div class="match-team"></div>
             </div>
-            <div class="match-pair">
-                <div class="match-team">Équipe D1</div>
-                <div class="match-team">Équipe C2</div>
+            <div class="match-pair" id="quart-3">
+                <div class="match-team"></div>
+                <div class="match-team"></div>
             </div>
         </div>
 
         <!-- Demi-finales -->
         <div class="bracket-round">
             <div class="round-title">Demi-finales</div>
-            <div class="match-pair">
-                <div class="match-team">Gagnant Quart 1</div>
-                <div class="match-team">Gagnant Quart 2</div>
+            <div class="match-pair" id="demi-0">
+                <div class="match-team"></div>
+                <div class="match-team"></div>
             </div>
-            <div class="match-pair">
-                <div class="match-team">Gagnant Quart 3</div>
-                <div class="match-team">Gagnant Quart 4</div>
+            <div class="match-pair" id="demi-1">
+                <div class="match-team"></div>
+                <div class="match-team"></div>
             </div>
         </div>
 
         <!-- Finale -->
         <div class="bracket-round final">
             <div class="round-title">Finale</div>
-            <div class="match-pair">
-                <div class="match-team">Gagnant Demi 1</div>
-                <div class="match-team">Gagnant Demi 2</div>
+            <div class="match-pair" id="finale">
+                <div class="match-team"></div>
+                <div class="match-team"></div>
             </div>
-            <div class="match-team winner">Vainqueur</div>
+            <div class="match-team" id="tournament-winner">Vainqueur</div>
         </div>
     </div>
 </div>
@@ -370,28 +401,51 @@
         return null;
     }
 
-    // Mise à jour des groupes optimisée
-    function updateGroup(groupName, teams) {
-        const groupHeader = findTournamentElement('group-header', `Groupe ${groupName}`);
-        if (!groupHeader) return;
+    // Remplacez votre fonction updateGroup par cette version améliorée
 
-        const teamList = groupHeader.nextElementSibling;
-        if (!teamList || !teamList.classList.contains('team-list')) return;
+// Remplacez votre fonction updateGroup par cette version finale
 
-        // Optimisation: ne mettre à jour que si nécessaire
-        const currentTeams = Array.from(teamList.children).map(li => li.textContent.trim());
-        const newTeams = teams.map(team => team.nom || `Équipe ${team.id}`);
-
-        if (JSON.stringify(currentTeams) !== JSON.stringify(newTeams)) {
-            teamList.innerHTML = '';
-            newTeams.forEach(teamName => {
-                const li = document.createElement('li');
-                li.className = 'team-item';
-                li.textContent = teamName;
-                teamList.appendChild(li);
-            });
-        }
+function updateGroup(groupName, teams) {
+    const groupHeader = findTournamentElement('group-header', `Groupe ${groupName}`);
+    if (!groupHeader) {
+        console.warn(`En-tête du groupe "${groupName}" non trouvé.`);
+        return;
     }
+
+    const teamList = groupHeader.nextElementSibling;
+    if (!teamList || !teamList.classList.contains('team-list')) {
+        console.warn(`Liste d'équipes pour le groupe "${groupName}" non trouvée.`);
+        return;
+    }
+
+    // Trier les équipes par points (décroissant)
+    teams.sort((a, b) => {
+        // Version robuste qui gère les données manquantes
+        const pointsA = (a.points !== undefined) ? a.points : (a.id?.points !== undefined) ? a.id.points : 0;
+        const pointsB = (b.points !== undefined) ? b.points : (b.id?.points !== undefined) ? b.id.points : 0;
+        return pointsB - pointsA;
+    });
+
+    teamList.innerHTML = '';
+
+    teams.forEach(team => {
+        // Version robuste pour le nom
+        const teamName = team.nom || team.id?.nom || 'Équipe sans nom';
+        // Version robuste pour les points
+        const teamPoints = (team.points !== undefined) ? team.points : 
+                          (team.id?.points !== undefined) ? team.id.points : 0;
+
+        const li = document.createElement('li');
+        li.className = 'team-item';
+
+        li.innerHTML = `
+            <span class="team-name">${teamName}</span>
+            <span class="team-points">${teamPoints} pts</span>
+        `;
+        
+        teamList.appendChild(li);
+    });
+}
 
     // Mise à jour des matchs optimisée
     function updateMatch(container, matchId, team1, team2) {
@@ -409,13 +463,30 @@
         }
     }
 
-   function updateTournamentView(data) {
-    if (!data) return;
+function updateTournamentView(data) {
+    if (!data) {
+        console.error("Aucune donnée reçue");
+        return;
+    }
 
-    // Groupes - version optimisée avec vérification des données
+    console.log("Données complètes reçues:", data);
+
+    // Groupes
+    if (data.groupes && typeof data.groupes === 'object') {
+        Object.entries(data.groupes).forEach(([groupName, teams]) => {
+            if (Array.isArray(teams)) {
+                updateGroup(groupName, teams);
+            } else {
+                console.error(`Format invalide pour le groupe ${groupName}`, teams);
+            }
+        });
+    } else {
+        console.warn("Données de groupe manquantes ou invalides");
+    }
+
+    // Groupes
     if (data.groupes) {
         Object.entries(data.groupes).forEach(([groupName, teams]) => {
-            // Vérification supplémentaire pour s'assurer que teams est un tableau
             if (Array.isArray(teams)) {
                 updateGroup(groupName, teams);
             } else {
@@ -424,15 +495,15 @@
         });
     }
 
-    // Quarts de finale - avec gestion des erreurs
+    // Quarts de finale
     if (data.quarts && Array.isArray(data.quarts)) {
         data.quarts.forEach((quart, index) => {
             try {
                 updateMatch(
                     'bracketContainer',
                     `quart-${index}`,
-                    quart.nom1 || '',
-                    quart.nom2 || ''
+                    quart.nom1 || 'À déterminer',
+                    quart.nom2 || 'À déterminer'
                 );
             } catch (error) {
                 console.error(`Erreur mise à jour quart ${index}:`, error);
@@ -440,15 +511,15 @@
         });
     }
 
-    // Demi-finales - avec gestion des erreurs
+    // Demi-finales
     if (data.demis && Array.isArray(data.demis)) {
         data.demis.forEach((demi, index) => {
             try {
                 updateMatch(
                     'bracketContainer',
                     `demi-${index}`,
-                    demi.nom1 || '',
-                    demi.nom2 || ''
+                    demi.nom1 || 'À déterminer',
+                    demi.nom2 || 'À déterminer'
                 );
             } catch (error) {
                 console.error(`Erreur mise à jour demi ${index}:`, error);
@@ -456,29 +527,35 @@
         });
     }
 
-    // Finale - version robuste avec vérification complète
+    // --- DÉBUT DE LA CORRECTION ---
+    // Finale et Vainqueur - version robuste
     if (data.finale) {
         try {
+            // Met à jour les équipes de la finale
             updateMatch(
                 'bracketContainer',
                 'finale',
-                data.finale.nom1 || '',
-                data.finale.nom2 || ''
+                data.finale.nom1 || 'À déterminer',
+                data.finale.nom2 || 'À déterminer'
             );
 
-            const winnerElement = document.querySelector('.winner');
+            // Met à jour le vainqueur du tournoi
+            const winnerElement = document.getElementById('tournament-winner');
             if (winnerElement) {
-                // Ajout d'une classe pour le vainqueur si nom existe
-                if (data.vainqueur?.nom) {
-                    winnerElement.textContent = data.vainqueur.nom;
-                    winnerElement.classList.add('winner-highlight');
+                // CORRECTION : On vérifie `data.vainqueur.nom` qui est la propriété correcte,
+                // et on s'assure qu'elle n'est pas vide.
+                if (data.vainqueur && data.vainqueur.id.nom && data.vainqueur.id.nom.trim() !== '') {
+                    // On affiche le nom du vainqueur
+                    winnerElement.textContent = data.vainqueur.id.nom;
+                    winnerElement.classList.add('winner');
                 } else {
-                    winnerElement.textContent = 'Vainqueur';
-                    winnerElement.classList.remove('winner-highlight');
+                    // Sinon, on affiche le texte par défaut
+                    winnerElement.textContent = "Vainqueur"; // Texte plus court et standard
+                    winnerElement.classList.remove('winner');
                 }
             }
         } catch (error) {
-            console.error('Erreur mise à jour finale:', error);
+            console.error('Erreur lors de la mise à jour de la finale ou du vainqueur :', error);
         }
     }
 
@@ -497,6 +574,8 @@
         }, 3000);
     }
 }
+
+
 
     // Polling de secours amélioré
     let pollingInterval;

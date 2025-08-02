@@ -389,17 +389,14 @@ body {
 }
 
 /* 
-  NOUVEAU : Règle pour masquer les contrôles de navigation
-  des carrousels inférieurs sur les écrans de type desktop.
+  NOUVEAU : Masque les contrôles de navigation pour les carrousels 
+  "Matchs à Jouer" et "Joueurs" sur les écrans de type desktop.
 */
-@media (min-width: 768px) { /* Cible les écrans à partir du point de rupture 'md' de Bootstrap */
-    
-    /* On sélectionne les boutons de contrôle SEULEMENT à l'intérieur 
-       des sections de contenu inférieures, et non du carrousel Hero. */
-    .matches-section .carousel-control-prev,
-    .matches-section .carousel-control-next,
-    .player-highlights .carousel-control-prev,
-    .player-highlights .carousel-control-next {
+@media (min-width: 768px) {
+    #upcomingMatchesCarouselDesktop .carousel-control-prev,
+    #upcomingMatchesCarouselDesktop .carousel-control-next,
+    #playerHighlightsCarouselDesktop .carousel-control-prev,
+    #playerHighlightsCarouselDesktop .carousel-control-next {
         display: none;
     }
 }
