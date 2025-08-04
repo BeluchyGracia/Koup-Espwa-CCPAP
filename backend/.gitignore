@@ -1,0 +1,19 @@
+# 📁 Dossier des dépendances (à ne jamais pousser)
+node_modules/
+
+# 🔒 Fichier de verrouillage des versions
+package-lock.json
+
+# ⚙️ Fichiers de logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 🖥️ Fichiers système (macOS, etc.)
+.DS_Store
+
+# 🔐 Variables d’environnement
+.env
+.env.local
+.env.development
+.env.production
