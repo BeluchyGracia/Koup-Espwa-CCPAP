@@ -7,7 +7,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
 
-        const BASE_URL = 'https://koup-espwa-ccpap.onrender.com';
+        // const BASE_URL = 'https://koup-espwa-ccpap.onrender.com';
 
 
     // =========================================================================
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function fetchRecentMatches() {
         try {
-            const response = await fetch(`${BASE_URL}/api/matchs/recent`);
+            const response = await fetch(`https://koup-espwa-ccpap.onrender.com/api/matchs/recent`);
 
             if (!response.ok) throw new Error('Erreur lors de la récupération des matchs récents');
             return await response.json();
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function fetchPlayers() {
     try {
-        const response = await fetch(`${BASE_URL}/api/joueurs`);
+        const response = await fetch(`https://koup-espwa-ccpap.onrender.com/api/joueurs`);
 
         if (!response.ok) throw new Error('Erreur lors de la récupération des joueurs');
         return await response.json();
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function fetchUpcomingMatches() {
         try {
-            const response = await fetch(`${BASE_URL}/api/matchs/upcoming`);
+            const response = await fetch(`https://koup-espwa-ccpap.onrender.com/api/matchs/upcoming`);
             if (!response.ok) throw new Error('Erreur lors de la récupération des matchs à venir');
             return await response.json();
         } catch (error) {
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function fetchPlayedMatches() {
         try {
-            const response = await fetch(`${BASE_URL}/api/matchs/resultats`);
+            const response = await fetch(`https://koup-espwa-ccpap.onrender.com/api/matchs/resultats`);
             if (!response.ok) throw new Error('Erreur lors de la récupération des matchs joués');
             return await response.json();
         } catch (error) {

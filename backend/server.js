@@ -12,6 +12,16 @@ const cors = require('cors');
 
 const app = express();
 
+
+const corsOptions = {
+  origin: 'https://koup-espwa-ccpap-b31l.vercel.app', // ton frontend vercel
+  methods: 'GET,POST,PUT,DELETE,OPTIONS',
+  credentials: true, // si tu utilises des cookies ou sessions
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); 
+
 const calendrierPath = path.join(__dirname, '../frontend/data/calendrier.json');
 const DATA_FILE = path.join(__dirname, 'tournamentData.json');
 const server = http.createServer(app);
