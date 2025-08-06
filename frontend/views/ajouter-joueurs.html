@@ -170,7 +170,7 @@
         // Charger les équipes au démarrage
         async function loadTeams() {
             try {
-                const response = await fetch('/api/equipes');
+                const response = await fetch('https://koup-espwa-ccpap.onrender.com/api/equipes');
                 if (!response.ok) throw new Error('Erreur de chargement');
                 
                 const teams = await response.json();
@@ -232,7 +232,7 @@
     };
 
     try {
-        const response = await fetch('/api/joueurs', {
+        const response = await fetch('https://koup-espwa-ccpap.onrender.com/api/joueurs', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

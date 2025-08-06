@@ -61,27 +61,28 @@
   </div>
 
   <!-- JS -->
-  <script>
-    async function ajouterEquipe(event) {
-      event.preventDefault();
-      const nom = document.getElementById("nom").value;
-      const manager = document.getElementById("manager").value;
+<script>
+  async function ajouterEquipe(event) {
+    event.preventDefault();
+    const nom = document.getElementById("nom").value;
+    const manager = document.getElementById("manager").value;
 
-      const res = await fetch('/api/equipes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nom, manager })
-      });
+    const res = await fetch('https://koup-espwa-ccpap.onrender.com/api/equipes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nom, manager })
+    });
 
-      const data = await res.json();
-      if (data.success) {
-        alert("✅ Équipe ajoutée avec succès !");
-        event.target.reset();
-      } else {
-        alert("❌ Erreur : " + data.error);
-      }
+    const data = await res.json();
+    if (data.success) {
+      alert("✅ Équipe ajoutée avec succès !");
+      event.target.reset();
+    } else {
+      alert("❌ Erreur : " + data.error);
     }
-  </script>
+  }
+</script>
+
 
   <!-- Bootstrap Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>

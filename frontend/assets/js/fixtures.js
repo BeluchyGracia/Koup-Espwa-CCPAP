@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', async function() {
+  const BASE_URL = 'https://koup-espwa-ccpap.onrender.com';
+
   const fixturesListContainer = document.getElementById('fixtures-list');
   const dropdownMenu = document.querySelector('#allTeamsDropdown + .dropdown-menu');
   const dropdownButton = document.getElementById('allTeamsDropdown');
@@ -6,7 +8,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   // 1. Récupérer tous les matchs à venir
   async function fetchUpcomingMatches() {
     try {
-      const res = await fetch('/api/matchs/a-venir');
+      const res = await fetch(`${BASE_URL}/api/matchs/a-venir`);
       if (!res.ok) throw new Error('Erreur chargement matchs');
       const data = await res.json();
 
@@ -30,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   // 2. Récupérer toutes les équipes
   async function fetchTeams() {
     try {
-      const res = await fetch('/api/equipes');
+      const res = await fetch(`${BASE_URL}/api/equipes`);
       if (!res.ok) throw new Error('Erreur chargement équipes');
       return await res.json();
     } catch (e) {

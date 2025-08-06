@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const BASE_URL = 'https://koup-espwa-ccpap.onrender.com';
+
   const tabs = document.querySelectorAll('.tab');
   const tableHeaders = document.getElementById('table-headers');
   const tableBody = document.getElementById('table-body');
   const paginationContainer = document.querySelector('.pagination');
   console.log("Script chargé avec succès!");
 
-  // Variables de pagination
   let currentPage = 1;
   const itemsPerPage = 4;
   let currentType = 'topscorers';
@@ -13,17 +14,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const endpoints = {
     topscorers: {
-      url: 'http://localhost:3000/topscorers',
+      url: `${BASE_URL}/topscorers`,
       headers: ['#', 'Player', 'Team', 'Goals'],
       key: 'total_buts'
     },
     yellowcards: {
-      url: 'http://localhost:3000/yellowcards',
+      url: `${BASE_URL}/yellowcards`,
       headers: ['#', 'Player', 'Team', 'Yellow Cards'],
       key: 'total_jaunes'
     },
     redcards: {
-      url: 'http://localhost:3000/redcards',
+      url: `${BASE_URL}/redcards`,
       headers: ['#', 'Player', 'Team', 'Red Cards'],
       key: 'total_rouges'
     }

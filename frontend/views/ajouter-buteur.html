@@ -204,11 +204,12 @@
         let currentMatch = null;
         let goals = [];
         let playersCache = {};
+        const API_BASE_URL = 'https://koup-espwa-ccpap.onrender.com';
         
         // Chargement initial des matchs
         async function loadMatches() {
             try {
-                const response = await fetch('/api/matchs/avec-resultats');
+                const response = await fetch(`${API_BASE_URL}/api/matchs/avec-resultats`);
                 if (!response.ok) throw new Error('Erreur de chargement');
                 
                 const matches = await response.json();
@@ -236,7 +237,7 @@
             }
             
             try {
-                const response = await fetch(`/api/equipes/${teamId}/joueurs`);
+                const response = await fetch(`${API_BASE_URL}/api/equipes/${teamId}/joueurs`);
                 if (!response.ok) throw new Error('Erreur de chargement');
                 
                 const players = await response.json();
@@ -415,7 +416,7 @@
             `;
             
             try {
-                const response = await fetch('/api/buts', {
+                const response = await fetch('${API_BASE_URL}/api/buts', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

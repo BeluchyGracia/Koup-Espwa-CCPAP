@@ -95,7 +95,7 @@
         // Charger les matchs sans résultat
         async function loadMatches() {
             try {
-                const response = await fetch('/api/matchs/sans-resultat');
+                const response = await fetch('https://koup-espwa-ccpap.onrender.com/api/matchs/sans-resultat');
                 
                 if (!response.ok) {
                     throw new Error('Erreur de chargement des matchs');
@@ -147,7 +147,7 @@
             const scoreAway = document.getElementById('scoreAway').value;
             
             try {
-                const response = await fetch('/api/resultats', {
+                const response = await fetch('https://koup-espwa-ccpap.onrender.com/api/resultats', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

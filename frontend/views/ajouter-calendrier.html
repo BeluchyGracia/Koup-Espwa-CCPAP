@@ -443,10 +443,12 @@
     </div>
 
    <script>
+
+    
     // Charger les équipes depuis la base de données
     async function chargerEquipes() {
         try {
-            const response = await fetch('/api/equipes');
+            const response = await fetch('https://koup-espwa-ccpap.onrender.com/api/equipes');
             if (!response.ok) throw new Error('Erreur réseau');
             
             const equipes = await response.json();
@@ -500,7 +502,7 @@
     // Charger les données existantes au démarrage
     async function chargerConfigurationExistante() {
         try {
-            const response = await fetch('/api/get-tournament');
+            const response = await fetch('https://koup-espwa-ccpap.onrender.com/api/get-tournament');
             
             if (!response.ok) {
                 throw new Error(`Erreur HTTP: ${response.status}`);
@@ -698,7 +700,7 @@
         tournamentSocket.send(JSON.stringify(tournamentData));
     } else {
         // Fallback à une requête HTTP si le WebSocket n'est pas disponible
-        fetch('/api/update-live-view', {
+        fetch('https://koup-espwa-ccpap.onrender.com/api/update-live-view', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(tournamentData)
@@ -770,7 +772,7 @@ function highlightUpdatedElements() {
         };
 
         try {
-            const response = await fetch('/api/save-tournament', {
+            const response = await fetch('https://koup-espwa-ccpap.onrender.com/api/save-tournament', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(tournamentData)
