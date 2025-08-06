@@ -107,7 +107,7 @@
         const role = 'joueur'; // ou 'manager'/'autre' si tu veux le demander via formulaire
 
         try {
-            const res = await fetch('/register', {
+            const res = await fetch('https://koup-espwa-ccpap.onrender.com/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password, role, nom_complet })
