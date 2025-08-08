@@ -13,13 +13,7 @@ const cors = require('cors');
 const app = express();
 
 
-// Remplacez les lignes 20-24 et supprimez ligne 56
-const corsOptions = {
-  origin: ['https://koup-espwa-ccpap-b31l.vercel.app', 'http://localhost:3000'],
-  methods: 'GET,POST,PUT,DELETE,OPTIONS',
-  credentials: true
-};
-app.use(cors(corsOptions)); 
+
 
 const calendrierPath = path.join(__dirname, '../frontend/data/calendrier.json');
 const DATA_FILE = path.join(__dirname, 'tournamentData.json');
@@ -1071,17 +1065,7 @@ module.exports = app;
 
 
 // Démarrer le serveur
-const PORT = process.env.PORT || 3000;
-// Tout à la fin, avant app.listen
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ 
-    success: false,
-    error: 'Erreur serveur',
-    message: err.message 
-  });
-});
-
+const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Serveur démarré sur http://localhost:${PORT}`);
     console.log(`Accès direct: http://localhost:${PORT}/views/login.html`);
