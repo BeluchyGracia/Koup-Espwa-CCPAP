@@ -16,21 +16,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const heroSlidesData = [
         {
-            imageUrl: '/images/im5.JPG',
+            imageUrl: 'https://koup-espwa-ccpap-yrbo.vercel.app/images/im5.JPG',
             title: 'Bienvenue au Koup Espwa CCPAP 2025',
             text: 'Suivez les scores, les statistiques et la progression des joueurs en temps réel.',
             buttonText: 'Voir les Matchs',
             buttonLink: '/views/fixtures.html'
         },
         {
-            imageUrl: '/images/im12.JPG',
+            imageUrl: 'https://koup-espwa-ccpap-yrbo.vercel.app/images/im12.JPG',
             title: 'Vivez le Frisson',
             text: 'Chaque match, chaque but, en direct.',
             buttonText: 'Voir les Scores',
             buttonLink: '/views/index_jim.html'
         },
         {
-            imageUrl: '/images/im10.JPG',
+            imageUrl: 'https://koup-espwa-ccpap-yrbo.vercel.app/images/im10.JPG',
             title: 'Rejoignez la Communauté',
             text: 'Inscrivez-vous pour suivre vos équipes préférées.',
             buttonText: 'Inscrivez-vous',
