@@ -65,6 +65,7 @@ initDataFile();
 
 
 // Middleware
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, '../frontend')));
 app.use('/images', express.static(path.join(__dirname, '../frontend/images')));
 app.use('/assets', express.static(path.join(__dirname, '../frontend/assets')));
