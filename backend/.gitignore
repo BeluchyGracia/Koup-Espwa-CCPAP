@@ -2,7 +2,7 @@
 node_modules/
 
 # 🔒 Fichier de verrouillage des versions
-package-lock.json
+# package-lock.json
 
 # ⚙️ Fichiers de logs
 npm-debug.log*
