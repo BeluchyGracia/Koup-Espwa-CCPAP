@@ -63,10 +63,10 @@ initDataFile();
 
 // Middleware
 app.use(express.static(path.join(__dirname, '../frontend')));
-app.use('/images', express.static(path.join(__dirname, '../frontend/images')));
-app.use('/assets', express.static(path.join(__dirname, '../frontend/assets')));
-app.use('/views', express.static(path.join(__dirname, '../frontend/views')));
-app.use('/js', express.static(path.join(__dirname, 'frontend/assets/js')));
+// app.use('/images', express.static(path.join(__dirname, '../frontend/images')));
+// app.use('/assets', express.static(path.join(__dirname, '../frontend/assets')));
+// app.use('/views', express.static(path.join(__dirname, '../frontend/views')));
+// app.use('/js', express.static(path.join(__dirname, 'frontend/assets/js')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
